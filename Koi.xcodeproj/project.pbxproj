@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,11 @@
 		DF01C9FF267F223100A565D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01C9EA267F222E00A565D3 /* ContentView.swift */; };
 		DF01CA00267F223100A565D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF01C9EB267F223100A565D3 /* Assets.xcassets */; };
 		DF01CA01267F223100A565D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF01C9EB267F223100A565D3 /* Assets.xcassets */; };
+		DFAF2ACC268056640098D268 /* UIImageColors in Frameworks */ = {isa = PBXBuildFile; productRef = DFAF2ACB268056640098D268 /* UIImageColors */; };
+		DFAF2AD126805DF60098D268 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD026805DF60098D268 /* Manga.swift */; };
+		DFAF2AD226805DF60098D268 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD026805DF60098D268 /* Manga.swift */; };
+		DFAF2AD426805E100098D268 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD326805E100098D268 /* Chapter.swift */; };
+		DFAF2AD526805E100098D268 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD326805E100098D268 /* Chapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,8 @@
 		DF01C9F8267F223100A565D3 /* Koi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF01C9FA267F223100A565D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF01C9FB267F223100A565D3 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		DFAF2AD026805DF60098D268 /* Manga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manga.swift; sourceTree = "<group>"; };
+		DFAF2AD326805E100098D268 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFAF2ACC268056640098D268 /* UIImageColors in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +65,10 @@
 		DF01C9E8267F222E00A565D3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				DFAF2AD826805E530098D268 /* Views */,
+				DFAF2AD726805E4D0098D268 /* Controllers */,
+				DFAF2AD626805E400098D268 /* Components */,
+				DFAF2ACD26805DB60098D268 /* Models */,
 				DF01C9E9267F222E00A565D3 /* KoiApp.swift */,
 				DF01C9EA267F222E00A565D3 /* ContentView.swift */,
 				DF01C9EB267F223100A565D3 /* Assets.xcassets */,
@@ -90,6 +102,36 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
+		DFAF2ACD26805DB60098D268 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DFAF2AD026805DF60098D268 /* Manga.swift */,
+				DFAF2AD326805E100098D268 /* Chapter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DFAF2AD626805E400098D268 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		DFAF2AD726805E4D0098D268 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DFAF2AD826805E530098D268 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,6 +148,9 @@
 			dependencies = (
 			);
 			name = "Koi (iOS)";
+			packageProductDependencies = (
+				DFAF2ACB268056640098D268 /* UIImageColors */,
+			);
 			productName = "Koi (iOS)";
 			productReference = DF01C9F0267F223100A565D3 /* Koi.app */;
 			productType = "com.apple.product-type.application";
@@ -153,6 +198,9 @@
 				Base,
 			);
 			mainGroup = DF01C9E3267F222E00A565D3;
+			packageReferences = (
+				DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */,
+			);
 			productRefGroup = DF01C9F1267F223100A565D3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -187,8 +235,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFAF2AD126805DF60098D268 /* Manga.swift in Sources */,
 				DF01C9FE267F223100A565D3 /* ContentView.swift in Sources */,
 				DF01C9FC267F223100A565D3 /* KoiApp.swift in Sources */,
+				DFAF2AD426805E100098D268 /* Chapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +246,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFAF2AD226805DF60098D268 /* Manga.swift in Sources */,
 				DF01C9FF267F223100A565D3 /* ContentView.swift in Sources */,
 				DF01C9FD267F223100A565D3 /* KoiApp.swift in Sources */,
+				DFAF2AD526805E100098D268 /* Chapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +491,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jathu/UIImageColors.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DFAF2ACB268056640098D268 /* UIImageColors */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */;
+			productName = UIImageColors;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DF01C9E4267F222E00A565D3 /* Project object */;
 }
