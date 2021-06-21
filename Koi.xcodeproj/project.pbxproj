@@ -27,6 +27,8 @@
 		DFAF2AE426806A8F0098D268 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AE226806A8F0098D268 /* MoreView.swift */; };
 		DFAF2AE626806C1E0098D268 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AE526806C1E0098D268 /* HistoryView.swift */; };
 		DFAF2AE726806C1E0098D268 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AE526806C1E0098D268 /* HistoryView.swift */; };
+		DFAF2AE9268070390098D268 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AE8268070390098D268 /* Sidebar.swift */; };
+		DFAF2AEA268070390098D268 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AE8268070390098D268 /* Sidebar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,7 @@
 		DFAF2ADF26806A7D0098D268 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DFAF2AE226806A8F0098D268 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		DFAF2AE526806C1E0098D268 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		DFAF2AE8268070390098D268 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				DFAF2ADA26806A1E0098D268 /* TabBar.swift */,
+				DFAF2AE8268070390098D268 /* Sidebar.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -262,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFAF2AE9268070390098D268 /* Sidebar.swift in Sources */,
 				DFAF2AE026806A7D0098D268 /* ExploreView.swift in Sources */,
 				DFAF2AD126805DF60098D268 /* Manga.swift in Sources */,
 				DF01C9FE267F223100A565D3 /* ContentView.swift in Sources */,
@@ -285,6 +290,7 @@
 				DF01C9FD267F223100A565D3 /* KoiApp.swift in Sources */,
 				DFAF2ADE26806A680098D268 /* LibraryView.swift in Sources */,
 				DFAF2AE126806A7D0098D268 /* ExploreView.swift in Sources */,
+				DFAF2AEA268070390098D268 /* Sidebar.swift in Sources */,
 				DFAF2AD526805E100098D268 /* Chapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

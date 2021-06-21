@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     var body: some View {
-        TabBar()
+        #if os(iOS)
+        if horizontalSizeClass == .compact {
+            TabBar()
+        } else {
+            Sidebar()
+        }
+        #else
+        Sidebar()
+        #endif
     }
 }
 
