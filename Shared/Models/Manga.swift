@@ -6,10 +6,10 @@
 //
 
 struct Manga {
-    var id: Int?
-    var title: String
-    var description: String
-    var author: String
+    var id: Int!
+    var title: String!
+    var description: String?
+    var author: String?
     var url: String?
-    var coverUrl: String
+    var coverUrl: String!
 }
