@@ -15,25 +15,40 @@ struct LibraryView: View {
         Manga(id: 2, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03"),
         Manga(id: 3, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03"),
         Manga(id: 4, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03")
-    ];
+    ]
+    
+    #if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 0) {
-                    LazyVGrid(
-                        columns: [GridItem(.adaptive(minimum: 160), spacing: 0)],
-                        spacing: 16
-                    ) {
-                        ForEach(recentManga, id: \.id) { manga in
+        #if os(iOS)
+        content
+        #else
+        content
+        #endif
+    }
+    
+    var content: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                LazyVGrid(
+                    columns: [GridItem(.adaptive(minimum: 160), spacing: 0)],
+                    spacing: 16
+                ) {
+                    ForEach(recentManga, id: \.id) { manga in
+                        VStack {
+                            #if os(iOS)
                             NavigationLink(destination: MangaDetialView(manga: manga)) {
                                 MangaItem(manga: manga)
                                     .frame(height: 230)
                             }
+                            #else
+                            #endif
                         }
                     }
-                    .frame(maxWidth: .infinity)
                 }
+                .frame(maxWidth: .infinity)
             }
             .navigationTitle("Library")
         }
