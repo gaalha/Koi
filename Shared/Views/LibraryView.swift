@@ -17,16 +17,9 @@ struct LibraryView: View {
         Manga(id: 4, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03")
     ]
     
-    #if os(iOS)
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    #endif
-    
     var body: some View {
-        #if os(iOS)
         content
-        #else
-        content
-        #endif
+            .navigationTitle("Library")
     }
     
     var content: some View {
@@ -44,13 +37,15 @@ struct LibraryView: View {
                                     .frame(height: 230)
                             }
                             #else
+                            // TODO: present modal logic
+                            MangaItem(manga: manga)
+                                .frame(height: 230)
                             #endif
                         }
                     }
                 }
                 .frame(maxWidth: .infinity)
             }
-            .navigationTitle("Library")
         }
     }
 }
