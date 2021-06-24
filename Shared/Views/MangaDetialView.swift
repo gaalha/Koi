@@ -23,14 +23,15 @@ struct MangaDetialView: View {
     var content: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                Spacer()
                 ZStack(alignment: .bottom) {
                     DescriptionGradient()
                     HStack {
-                    Image(manga.coverUrl)
-                        .resizable()
-                        .frame(width: 105, height: 150, alignment: .leading)
-                        .scaledToFill()
-                    MangaDescription(title: manga.title, description: manga.description, author: manga.author)
+                        Image(manga.coverUrl)
+                            .resizable()
+                            .frame(width: 105, height: 150, alignment: .leading)
+                            .scaledToFill()
+                        MangaDescription(title: manga.title, description: manga.description, author: manga.author)
                     }
                     .padding()
                 }
@@ -41,14 +42,16 @@ struct MangaDetialView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 300, alignment: .topLeading)
-                    .clipped()
                     .blur(radius: 8)
+                    .clipped()
             )
             .frame(height: 300, alignment: .topLeading)
             
             VStack {
                 ForEach(0 ..< 10) { item in
-                    ChapterListItem()
+                    ChapterListItem(
+                        chapter: Chapter(id: 1, title: "72 - Eclipse", fanSub: "PlotTwist No Fansub", date: "12/11/94", url: "google.com", download: false)
+                    )
                     Divider()
                 }
             }
@@ -59,6 +62,6 @@ struct MangaDetialView: View {
 
 struct MangaDetialView_Previews: PreviewProvider {
     static var previews: some View {
-        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03"))
+        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk ", author: "Kentaro Miura", url: "#", coverUrl: "01"))
     }
 }

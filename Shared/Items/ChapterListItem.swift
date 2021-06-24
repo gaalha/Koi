@@ -8,31 +8,28 @@
 import SwiftUI
 
 struct ChapterListItem: View {
+    
+    var chapter: Chapter
+    
     var body: some View {
-//        VStack(alignment: .leading, content: {
-//            Text("71 - Eclipse")
-//            Text("PlotTwist No Fansub")
-//                .font(.footnote)
-//                .foregroundColor(Color.gray)
-//        })
-//        .padding(3.0)
-        HStack(alignment: .top) {
+        HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 4.0) {
-                Text("71 - Eclipse")
+                Text(chapter.title)
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(.primary)
-                Text("PlotTwist No Fansub")
+                Text(chapter.fanSub ?? "")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
             Spacer()
+            DownloadButton(chapter: Chapter(id: 1, title: "72 - Eclipse", fanSub: "PlotTwist No Fansub", date: "12/11/94", url: "google.com", download: false))
         }
     }
 }
 
 struct ChapterListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ChapterListItem()
+        ChapterListItem(chapter: Chapter(id: 1, title: "72 - Eclipse", fanSub: "PlotTwist No Fansub", date: "12/11/94", url: "google.com", download: false))
     }
 }

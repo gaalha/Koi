@@ -18,6 +18,7 @@ struct MangaItem: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     MangaDescription(title: manga.title, author: manga.author)
+                        .padding()
                 }
             }
         }

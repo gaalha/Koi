@@ -16,25 +16,26 @@ struct MangaDescription: View {
     var author: String?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.title)
-                .fontWeight(.bold)
-                .lineLimit(2)
-                .shadow(radius: 10)
-            if description != nil {
-                Text(description ?? "")
-                    .lineLimit(3)
-                    .shadow(radius: 5)
-            }
-            if author != nil {
-                Text(author ?? "")
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.gray)
-                    .shadow(radius: 5)
+                    .lineLimit(3)
+                    .shadow(radius: 10)
+                if description != nil {
+                    Text(description ?? "")
+                        .lineLimit(3)
+                        .shadow(radius: 5)
+                }
+                if author != nil {
+                    Text(author ?? "")
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.gray)
+                        .shadow(radius: 5)
+                }
             }
+            Spacer()
         }
-        .padding()
     }
 }
 

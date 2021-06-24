@@ -19,34 +19,45 @@ struct LibraryView: View {
     
     var body: some View {
         content
-            .navigationTitle("Library")
     }
     
     var content: some View {
         ScrollView {
             VStack(spacing: 0) {
-                LazyVGrid(
-                    columns: [GridItem(.adaptive(minimum: 160), spacing: 0)],
-                    spacing: 16
-                ) {
-                    ForEach(recentManga, id: \.id) { manga in
-                        VStack {
-                            #if os(iOS)
-                            NavigationLink(destination: MangaDetialView(manga: manga)) {
-                                MangaItem(manga: manga)
-                                    .frame(height: 230)
-                            }
-                            #else
-                            // TODO: present modal logic
-                            MangaItem(manga: manga)
-                                .frame(height: 230)
-                            #endif
-                        }
+                #if os(iOS)
+                grid
+                    .padding(.top)
+                #else
+                grid
+                    .padding(16)
+                #endif
+            }
+            .navigationTitle("Library")
+        }
+    }
+    
+    
+    var grid: some View {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 160), spacing: 0)],
+            spacing: 16
+        ) {
+            ForEach(recentManga, id: \.id) { manga in
+                VStack {
+                    #if os(iOS)
+                    NavigationLink(destination: MangaDetialView(manga: manga)) {
+                        MangaItem(manga: manga)
+                            .frame(height: 200)
                     }
+                    #else
+                    // TODO: present modal logic
+                    MangaItem(manga: manga)
+                        .frame(height: 200)
+                    #endif
                 }
-                .frame(maxWidth: .infinity)
             }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
