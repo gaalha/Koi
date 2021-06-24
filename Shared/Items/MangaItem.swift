@@ -27,10 +27,10 @@ struct MangaItem: View {
             Image(manga.coverUrl)
                 .resizable()
                 .scaledToFill()
+                .frame(alignment: .topLeading)
         )
         .cornerRadius(20)
         .shadow(radius: 1)
-        .padding(.horizontal)
     }
     
 }

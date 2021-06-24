@@ -62,6 +62,6 @@ struct MangaDetialView: View {
 
 struct MangaDetialView_Previews: PreviewProvider {
     static var previews: some View {
-        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk ", author: "Kentaro Miura", url: "#", coverUrl: "01"))
+        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03"))
     }
 }
