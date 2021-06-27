@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIImageColors
 
 struct MangaDetialView: View {
     
@@ -25,27 +26,31 @@ struct MangaDetialView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                 ZStack(alignment: .bottom) {
+                    Image(manga.coverUrl)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 320, alignment: .topLeading)
+                        .blur(radius: 8)
+                        .clipped()
+                    
                     DescriptionGradient()
+                    
                     HStack {
                         Image(manga.coverUrl)
                             .resizable()
                             .frame(width: 105, height: 150, alignment: .leading)
                             .scaledToFill()
-                        MangaDescription(title: manga.title, description: manga.description, author: manga.author)
+                        
+                        VStack(alignment: .leading) {
+                            MangaDescription(title: manga.title, description: manga.description, author: manga.author)
+                            MangaDetailActions(colors: extractCovercolors() ?? UIImageColors(background: UIColor(.blue), primary: UIColor(.white), secondary: UIColor(.blue), detail: UIColor(.blue)))
+                        }
                     }
                     .padding()
                 }
             }
             .foregroundColor(.white)
-            .background(
-                Image(manga.coverUrl)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 300, alignment: .topLeading)
-                    .blur(radius: 8)
-                    .clipped()
-            )
-            .frame(height: 300, alignment: .topLeading)
+            .cornerRadius(20)
             
             VStack {
                 ForEach(0 ..< 10) { item in
@@ -58,10 +63,15 @@ struct MangaDetialView: View {
             .padding()
         }
     }
+    
+    func extractCovercolors() -> UIImageColors? {
+        return UIImage(named: manga.coverUrl)?.getColors()
+    }
+    
 }
 
 struct MangaDetialView_Previews: PreviewProvider {
     static var previews: some View {
-        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "03"))
+        MangaDetialView(manga: Manga(id: 2, title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura", url: "#", coverUrl: "13"))
     }
 }

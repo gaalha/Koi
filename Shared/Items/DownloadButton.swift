@@ -16,7 +16,9 @@ struct DownloadButton: View {
             // Add target for download
             print("button pressed")
         }) {
-            Text("Download".uppercased())
+//            Text("Download".uppercased())
+            Image(systemName: "icloud.and.arrow.down")
+                .foregroundColor(.blue)
         }
     }
 }
