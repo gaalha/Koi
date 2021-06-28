@@ -18,41 +18,33 @@ struct MangaDetailActions: View {
                 Button(action: {
                     print("button pressed")
                 }) {
-                    Image(systemName: "play")
-                        .frame(height: 10)
-                        .padding()
-                        .background(Color(colors.secondary))
-                        .clipShape(Circle())
-                        .foregroundColor(Color(colors.background))
-                        .shadow(radius: 5)
+                    buttonStyle(icon: "play")
                 }
                 
                 Button(action: {
                     print("button pressed")
                 }) {
-                    Image(systemName: "bookmark")
-                        .frame(height: 10)
-                        .padding()
-                        .background(Color(colors.secondary))
-                        .clipShape(Circle())
-                        .foregroundColor(Color(colors.background))
-                        .shadow(radius: 5)
+                    buttonStyle(icon: "bookmark")
                 }
                 
                 Button(action: {
                     print("button pressed")
                 }) {
-                    Image(systemName: "arrow.2.squarepath")
-                        .frame(height: 10)
-                        .padding()
-                        .background(Color(colors.secondary))
-                        .clipShape(Circle())
-                        .foregroundColor(Color(colors.background))
-                        .shadow(radius: 5)
+                    buttonStyle(icon: "arrow.2.squarepath")
                 }
             }
         }
         .padding(.horizontal)
+    }
+    
+    func buttonStyle(icon: String) -> some View {
+        Image(systemName: icon)
+            .frame(height: 10)
+            .padding()
+            .background(Color(colors.secondary))
+            .clipShape(Circle())
+            .foregroundColor(Color(colors.background))
+            .shadow(radius: 5)
     }
 }
 

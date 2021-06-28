@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ExploreView: View {
     var body: some View {
-        Text("Hello, from Explore!")
+        ScrollView {
+            VStack(spacing: 0) {
+                
+            }
+            .navigationTitle("Explore")
+        }
     }
 }
 
