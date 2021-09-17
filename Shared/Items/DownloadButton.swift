@@ -24,6 +24,6 @@ struct DownloadButton: View {
 
 struct DownloadButton_Previews: PreviewProvider {
     static var previews: some View {
-        DownloadButton(chapter: Chapter(id: 1, title: "72 - Eclipse", fanSub: "PlotTwist No Fansub", date: "12/11/94", url: "google.com", download: false))
+        DownloadButton(chapter: Chapter(name: "72 - Eclipse", url: "google.com", scanlator: "PlotTwist No Fansub", uploadDate: 1605420000000, downloaded: false))
     }
 }

@@ -65,7 +65,7 @@ struct MangaDetialView: View {
             VStack {
                 ForEach(0 ..< 10) { item in
                     ChapterListItem(
-                        chapter: Chapter(id: 1, title: "72 - Eclipse", fanSub: "PlotTwist No Fansub", date: "12/11/94", url: "google.com", download: false)
+                        chapter: Chapter(name: "72 - Eclipse", url: "google.com", scanlator: "PlotTwist No Fansub", uploadDate: 1605420000000, downloaded: false)
                     )
                     Divider()
                 }

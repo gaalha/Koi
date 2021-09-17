@@ -2,16 +2,44 @@
 //  Chapter.swift
 //  Koi
 //
+// Chapter images:
+// /api/v1/manga/{mangaId}/chapter/{chapterId}/page/{pageId}
+//
 //  Created by Edgar Mejía on 20/6/21.
 //
 
-struct Chapter {
-    var id: Int!
-//    var mangaId: Int!
-//    var number: Double?
-    var title: String!
-    var fanSub: String?
-    var date: String?
+import SwiftUI
+
+struct Chapter: Identifiable, Decodable {
+    
+    var id = UUID()
+    
+    var name: String!
+    
     var url: String!
-    var download: Bool!
+    
+    var chapterNumber: Double!
+    
+    var scanlator: String?
+    
+    var mangaId: Int!
+    
+    var uploadDate: Int64?
+    
+    var bookmarked: Bool!
+    
+    var read: Bool!
+    
+    var downloaded: Bool!
+    
+    var lastPageRead: Int?
+    
+    var lastReadAt: Int64?
+    
+    var index: Int?
+    
+    var pageCount: Int?
+    
+    var chapterCount: Int?
+    
 }

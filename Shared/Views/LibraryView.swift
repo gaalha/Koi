@@ -9,9 +9,9 @@ import SwiftUI
 
 struct LibraryView: View {
     
-    @State private var favoriteColor = "Red"
+    @State private var favoriteColor = "Reading"
     
-    var colors = ["Reading", "Planned", "NSFW"]
+    var categories = ["Reading", "Planned", "NSFW"]
     
     var body: some View {
         content
@@ -21,7 +21,7 @@ struct LibraryView: View {
         ScrollView {
             VStack(spacing: 0) {
                 Picker("", selection: $favoriteColor) {
-                    ForEach(colors, id: \.self) {
+                    ForEach(categories, id: \.self) {
                         Text($0)
                     }
                 }

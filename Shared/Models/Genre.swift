@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct Genre: Identifiable, Decodable {
+    
+    var id: Int
+    
+    var name: String!
+    
+}

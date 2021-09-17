@@ -1,15 +1,42 @@
 //
-//  Source.swift
+//  Extension.swift
 //  Koi
 //
-//  Created by Edgar Mejía on 1/7/21.
+//  Extensions list:
+//  /api/v1/extension/list
+//
+//  Install extension:
+//  api/v1/extension/install/{pkgName}
+//
+//  Created by Edgar Mejía on 17/9/21.
 //
 
-struct Source {
-    var id: Int!
+import SwiftUI
+
+struct Extension: Identifiable, Decodable {
+    
+    var id = UUID()
+    
+    var apkName: String!
+    
+    var iconUrl: String!
+    
     var name: String!
-    var description: String?
+    
+    var pkgName: String!
+    
+    var versionName: String!
+    
+    var versionCode: Int!
+    
     var lang: String!
-    var url: String!
-    var icon: String!
+    
+    var isNsfw: Bool!
+    
+    var installed: Bool!
+    
+    var hasUpdate: Bool!
+    
+    var obsolete: Bool!
+    
 }
