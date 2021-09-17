@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import UIImageColors
 
 struct MangaDetailActions: View {
-    
-    var colors: UIImageColors
     
     var body: some View {
         VStack {
@@ -41,15 +38,15 @@ struct MangaDetailActions: View {
         Image(systemName: icon)
             .frame(height: 10)
             .padding()
-            .background(Color(colors.secondary))
+            .background(Color.accentColor)
             .clipShape(Circle())
-            .foregroundColor(Color(colors.background))
+            .foregroundColor(Color.white)
             .shadow(radius: 5)
     }
 }
 
 struct MangaDetailActions_Previews: PreviewProvider {
     static var previews: some View {
-        MangaDetailActions(colors: UIImageColors(background: UIColor(.white), primary: UIColor(.white), secondary: UIColor(.blue), detail: UIColor(.blue)))
+        MangaDetailActions()
     }
 }

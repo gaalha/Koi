@@ -53,7 +53,7 @@ struct MangaDetialView: View {
                         VStack(alignment: .leading) {
                             MangaDescription(title: manga.title, description: manga.description, author: manga.author)
                             
-                            MangaDetailActions(colors: extractCovercolors() ?? UIImageColors(background: UIColor(.blue), primary: UIColor(.white), secondary: UIColor(.blue), detail: UIColor(.blue)))
+                            MangaDetailActions()
                         }
                     }
                     .padding()
@@ -80,10 +80,6 @@ struct MangaDetialView: View {
                     .foregroundColor(.blue)
             }
         }
-    }
-    
-    func extractCovercolors() -> UIImageColors? {
-        return UIImage(named: manga.coverUrl)?.getColors()
     }
     
 }
