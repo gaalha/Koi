@@ -22,7 +22,7 @@ struct MangaDetialView: View {
             .introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = true
                 uiTabarController = UITabBarController
-            }.onDisappear{
+            }.onDisappear {
                 uiTabarController?.tabBar.isHidden = false
             }
         #else
