@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TabBar: View {
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -41,9 +42,9 @@ struct TabBar: View {
                 Image(systemName: "ellipsis.circle")
                 Text("More")
             }
-            
         }
     }
+    
 }
 
 struct TabBar_Previews: PreviewProvider {

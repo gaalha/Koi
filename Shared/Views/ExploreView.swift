@@ -14,6 +14,14 @@ struct ExploreView: View {
                 
             }
             .navigationTitle("Explore")
+            .toolbar {
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Image(systemName: "globe")
+                        .foregroundColor(.blue)
+                }
+            }
         }
     }
 }

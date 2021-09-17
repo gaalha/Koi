@@ -7,8 +7,11 @@
 
 import SwiftUI
 import UIImageColors
+import Introspect
 
 struct MangaDetialView: View {
+    
+    @State var uiTabarController: UITabBarController?
     
     var manga: Manga
     
@@ -16,6 +19,12 @@ struct MangaDetialView: View {
         #if os(iOS)
         content
             .edgesIgnoringSafeArea(.all)
+            .introspectTabBarController { (UITabBarController) in
+                UITabBarController.tabBar.isHidden = true
+                uiTabarController = UITabBarController
+            }.onDisappear{
+                uiTabarController?.tabBar.isHidden = false
+            }
         #else
         content
         #endif
@@ -43,6 +52,7 @@ struct MangaDetialView: View {
                         
                         VStack(alignment: .leading) {
                             MangaDescription(title: manga.title, description: manga.description, author: manga.author)
+                            
                             MangaDetailActions(colors: extractCovercolors() ?? UIImageColors(background: UIColor(.blue), primary: UIColor(.white), secondary: UIColor(.blue), detail: UIColor(.blue)))
                         }
                     }
@@ -61,6 +71,14 @@ struct MangaDetialView: View {
                 }
             }
             .padding()
+        }
+        .toolbar {
+            Button(action: {
+                print("button pressed")
+            }) {
+                Image(systemName: "arrowshape.turn.up.right")
+                    .foregroundColor(.blue)
+            }
         }
     }
     
