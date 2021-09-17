@@ -36,7 +36,6 @@
 		DF5A1D2D26F1BA2700D425A8 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = DF5A1D2C26F1BA2700D425A8 /* Introspect */; };
 		DF9026AB2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
 		DF9026AC2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
-		DFAF2ACC268056640098D268 /* UIImageColors in Frameworks */ = {isa = PBXBuildFile; productRef = DFAF2ACB268056640098D268 /* UIImageColors */; };
 		DFAF2AD126805DF60098D268 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD026805DF60098D268 /* Manga.swift */; };
 		DFAF2AD226805DF60098D268 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD026805DF60098D268 /* Manga.swift */; };
 		DFAF2AD426805E100098D268 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD326805E100098D268 /* Chapter.swift */; };
@@ -96,7 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFAF2ACC268056640098D268 /* UIImageColors in Frameworks */,
 				DF5A1D2D26F1BA2700D425A8 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,7 +242,6 @@
 			);
 			name = "Koi (iOS)";
 			packageProductDependencies = (
-				DFAF2ACB268056640098D268 /* UIImageColors */,
 				DF5A1D2C26F1BA2700D425A8 /* Introspect */,
 			);
 			productName = "Koi (iOS)";
@@ -295,7 +292,6 @@
 			);
 			mainGroup = DF01C9E3267F222E00A565D3;
 			packageReferences = (
-				DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */,
 				DF5A1D2B26F1BA2700D425A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = DF01C9F1267F223100A565D3 /* Products */;
@@ -635,14 +631,6 @@
 				minimumVersion = 0.1.3;
 			};
 		};
-		DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jathu/UIImageColors.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -650,11 +638,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DF5A1D2B26F1BA2700D425A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
-		};
-		DFAF2ACB268056640098D268 /* UIImageColors */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DFAF2ACA268056640098D268 /* XCRemoteSwiftPackageReference "UIImageColors" */;
-			productName = UIImageColors;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
