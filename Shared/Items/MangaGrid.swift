@@ -11,7 +11,7 @@ struct MangaGrid: View {
     
     var body: some View {
         LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 150, maximum: 160), spacing: 16)],
+            columns: [GridItem(.adaptive(minimum: 100, maximum: 100), spacing: 16)],
             spacing: 18
         ) {
             ForEach(recentManga, id: \.id) { manga in
@@ -19,7 +19,7 @@ struct MangaGrid: View {
                     #if os(iOS)
                     NavigationLink(destination: MangaDetialView(manga: manga)) {
                         MangaItem(manga: manga)
-                            .frame(height: 220)
+                            .frame(height: 200)
                     }
                     #else
                     // TODO: present modal logic

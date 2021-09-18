@@ -49,6 +49,7 @@ struct MangaDetialView: View {
                             .resizable()
                             .frame(width: 105, height: 150, alignment: .leading)
                             .scaledToFill()
+                            .shadow(radius: 10)
                         
                         VStack(alignment: .leading) {
                             MangaDescription(title: manga.title, description: manga.description, author: manga.author)
