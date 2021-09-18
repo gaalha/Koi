@@ -9,40 +9,74 @@ import SwiftUI
 
 struct LibraryView: View {
     
-    @State private var favoriteColor = "Reading"
+    @State var categorySelected = 0
     
-    var categories = ["Reading", "Planned", "NSFW"]
+    @State var categories: [Category] = []
+    
+    @State var categoriesLoaded: Bool = false
+    
+    @State var mangaList: [Manga] = []
+    
+    @State var mangaListLoaded: Bool = false
     
     var body: some View {
         content
+            .navigationTitle("Library")
+            .onAppear {
+                CategoryViewModel().getAll { (categories) in
+                    self.categories = categories
+                    self.categoriesLoaded = true
+                    
+                    CategoryViewModel().getOne(id: categorySelected, completion: { (mangaList) in
+                        self.mangaList = mangaList
+                        self.mangaListLoaded = true
+                    })
+                }
+            }
     }
     
     var content: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                Picker("", selection: $favoriteColor) {
-                    ForEach(categories, id: \.self) {
-                        Text($0)
-                    }
+            if !categoriesLoaded && !mangaListLoaded {
+                VStack(alignment: .leading) {
+                    ProgressView()
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                MangaGrid()
-                    .padding()
+            } else {
+                VStack(spacing: 0) {
+                    if categoriesLoaded && self.categories.count > 0 {
+                        Picker("", selection: $categorySelected) {
+                            ForEach(self.categories, id: \.id) { category in
+                                Text(category.name)
+                            }
+                        }
+                        .onChange(of: categorySelected) {tag in
+                            mangaListLoaded = false
+                            
+                            CategoryViewModel().getOne(id: categorySelected, completion: { (mangaList) in
+                                self.mangaList = mangaList
+                                self.mangaListLoaded = true
+                            })
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding()
+                    }
+                    
+                    if mangaListLoaded && self.mangaList.count > 0  {
+                        MangaGrid(mangaList: mangaList)
+                            .padding()
+                    } else if mangaListLoaded && self.mangaList.count == 0 {
+                        Text("No hay series que mostrar 🥲")
+                    } else if !mangaListLoaded {
+                        ProgressView()
+                    }
+                    
+                }
             }
-//            .toolbar {
-//                ToolbarItem(placement: .principal) {
-//                    Picker("", selection: $favoriteColor) {
-//                        ForEach(colors, id: \.self) {
-//                            Text($0)
-//                        }
-//                    }
-//                    .pickerStyle(SegmentedPickerStyle())
-//                }
-//            }
-            .navigationTitle("Library")
         }
+    }
+    
+    func categoryChange(_ tag: Int) {
+        print("Color tag: \(tag)")
     }
 }
 
