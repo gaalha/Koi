@@ -23,15 +23,7 @@ struct LibraryView: View {
         content
             .navigationTitle("Library")
             .onAppear {
-                CategoryViewModel().getAll { (categories) in
-                    self.categories = categories
-                    self.categoriesLoaded = true
-                    
-                    CategoryViewModel().getOne(id: categorySelected, completion: { (mangaList) in
-                        self.mangaList = mangaList
-                        self.mangaListLoaded = true
-                    })
-                }
+                fetchCategories()
             }
     }
     
@@ -51,32 +43,39 @@ struct LibraryView: View {
                         }
                         .onChange(of: categorySelected) {tag in
                             mangaListLoaded = false
-                            
-                            CategoryViewModel().getOne(id: categorySelected, completion: { (mangaList) in
-                                self.mangaList = mangaList
-                                self.mangaListLoaded = true
-                            })
+                            fetchOneCategory(categoryId: categorySelected)
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .padding()
                     }
                     
-                    if mangaListLoaded && self.mangaList.count > 0  {
+                    if mangaListLoaded && !self.mangaList.isEmpty {
                         MangaGrid(mangaList: mangaList)
                             .padding()
-                    } else if mangaListLoaded && self.mangaList.count == 0 {
-                        Text("No hay series que mostrar 🥲")
+                    } else if mangaListLoaded && self.mangaList.isEmpty {
+                        Text("Nothing to show 🥲")
+                            .padding(.top)
                     } else if !mangaListLoaded {
                         ProgressView()
                     }
-                    
                 }
             }
         }
     }
     
-    func categoryChange(_ tag: Int) {
-        print("Color tag: \(tag)")
+    func fetchCategories() {
+        CategoryViewModel().getAll { (categories) in
+            self.categories = categories
+            self.categoriesLoaded = true
+            fetchOneCategory(categoryId: categorySelected)
+        }
+    }
+    
+    func fetchOneCategory(categoryId: Int) {
+        CategoryViewModel().getOne(id: categoryId, completion: { (mangaList) in
+            self.mangaList = mangaList
+            self.mangaListLoaded = true
+        })
     }
 }
 

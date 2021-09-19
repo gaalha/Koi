@@ -42,4 +42,21 @@ struct Chapter: Identifiable, Decodable {
     
     var chapterCount: Int?
     
+    private enum CodingKeys: String, CodingKey {
+        case name,
+             url,
+             chapterNumber,
+             scanlator,
+             mangaId,
+             uploadDate,
+             bookmarked,
+             read,
+             downloaded,
+             lastPageRead,
+             lastReadAt,
+             index,
+             pageCount,
+             chapterCount
+    }
+    
 }

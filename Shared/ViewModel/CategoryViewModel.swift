@@ -16,7 +16,6 @@ class CategoryViewModel {
         
         URLSession.shared.dataTask(with: url) { data, _, _ in
             let categories = try! JSONDecoder().decode([Category].self, from: data!)
-            print(categories)
             
             DispatchQueue.main.async {
                 completion(categories)

@@ -18,12 +18,13 @@ struct ChapterListItem: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(.primary)
+                    .lineLimit(1)
                 Text(chapter.scanlator ?? "")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
             Spacer()
-            DownloadButton(chapter: Chapter(name: "72 - Eclipse", url: "google.com", scanlator: "PlotTwist No Fansub", uploadDate: 1605420000000, downloaded: false))
+            DownloadButton(chapter: chapter)
         }
     }
 }

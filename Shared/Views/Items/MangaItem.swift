@@ -17,30 +17,15 @@ struct MangaItem: View {
         let thumnailUrl = URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!
         
         VStack {
-            VStack(alignment: .leading, spacing: 0) {
-                ZStack {
-                    DescriptionGradient()
-                    VStack(alignment: .leading, spacing: 4) {
-                        Spacer()
-                        MangaDescription(title: "", author: "")
-                    }
-                }
-            }
-            .foregroundColor(.white)
-            .background(
-                AsyncImage(
-                    url:  thumnailUrl,
-                    image: {
-                        Image(uiImage: $0)
-                            .resizable()
-                    }
-                )
-            )
+            AsyncImage(url:  thumnailUrl, image: {
+                Image(uiImage: $0)
+                    .resizable()
+            })
             .cornerRadius(20)
             .shadow(radius: 1)
             
             Text(manga.title)
-                .font(.body)
+                .font(.system(size: 14))
                 .foregroundColor(Color("Text"))
                 .lineLimit(2)
                 .frame(minHeight: 40, alignment: .top)

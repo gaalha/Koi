@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
-import UIImageColors
+#if os(iOS)
 import Introspect
+#endif
 
 struct MangaDetialView: View {
     
-    @State var uiTabarController: UITabBarController?
-    
     var manga: Manga
+    
+    #if os(iOS)
+    @State var uiTabarController: UITabBarController?
+    #endif
+    
+    @State var chapters: [Chapter] = []
+    
+    @State var chaptersLoaded: Bool = false
     
     var body: some View {
         #if os(iOS)
@@ -22,74 +29,89 @@ struct MangaDetialView: View {
             .introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = true
                 uiTabarController = UITabBarController
-            }.onDisappear {
+            }
+            .onAppear {
+                fetchChapterList(mangaId: manga.id)
+            }
+            .onDisappear {
                 uiTabarController?.tabBar.isHidden = false
             }
         #else
         content
+            .onAppear {
+                fetchChapterList(mangaId: manga.id)
+            }
         #endif
     }
     
     var content: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Spacer()
                 ZStack(alignment: .bottom) {
-                    AsyncImage(
-                        url: URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!,
-                        image: {
-                            Image(uiImage: $0)
-                                .resizable()
-                        }
-                    )
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 320, alignment: .topLeading)
-                    .blur(radius: 8)
-                    .clipped()
+                    thumbnail
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 320, alignment: .topLeading)
+                        .blur(radius: 8)
+                        .clipped()
                     
                     DescriptionGradient()
                     
-                    HStack {
-                        AsyncImage(
-                            url: URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!,
-                            image: {
-                                Image(uiImage: $0)
-                                    .resizable()
-                            }
-                        )
-                        .frame(width: 105, height: 150, alignment: .leading)
-                        .scaledToFill()
-                        .shadow(radius: 10)
-                        
-                        VStack(alignment: .leading) {
-                            MangaDescription(title: manga.title, description: manga.description, author: manga.author)
-                            
-                            MangaDetailActions()
-                        }
-                    }
-                    .padding()
+                    mangaCover
+                        .padding()
                 }
             }
             .foregroundColor(.white)
             .cornerRadius(20)
             
-            VStack {
-                ForEach(0 ..< 10) { item in
-                    ChapterListItem(
-                        chapter: Chapter(name: "72 - Eclipse", url: "google.com", scanlator: "PlotTwist No Fansub", uploadDate: 1605420000000, downloaded: false)
-                    )
+            mangaList
+                .padding()
+        }
+    }
+    
+    var mangaCover: some View {
+        HStack {
+            thumbnail
+                .frame(width: 105, height: 150, alignment: .leading)
+                .scaledToFill()
+                .shadow(radius: 10)
+            
+            VStack(alignment: .leading) {
+                MangaDescription(title: manga.title, description: manga.description, author: manga.author)
+                
+                MangaDetailActions()
+            }
+        }
+    }
+    
+    var mangaList: some View {
+        VStack {
+            if self.chaptersLoaded && !self.chapters.isEmpty {
+                ForEach(chapters, id: \.id) { chapter in
+                    ChapterListItem(chapter: chapter)
                     Divider()
                 }
+            } else if self.chaptersLoaded && self.chapters.isEmpty {
+                Text("No chapters found 🥲")
+            } else if !chaptersLoaded {
+                ProgressView()
             }
-            .padding()
         }
-        .toolbar {
-            Button(action: {
-                print("button pressed")
-            }) {
-                Image(systemName: "arrowshape.turn.up.right")
-                    .foregroundColor(.blue)
+    }
+    
+    var thumbnail: some View {
+        AsyncImage(
+            url: URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!,
+            image: {
+                Image(uiImage: $0)
+                    .resizable()
             }
+        )
+    }
+    
+    func fetchChapterList(mangaId: Int) {
+        MangaViewModel().getChapters(mangaId: mangaId) { chapters in
+            chaptersLoaded = true
+            self.chapters = chapters
         }
     }
     
