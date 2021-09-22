@@ -2,8 +2,14 @@
 //  Chapter.swift
 //  Koi
 //
-// Chapter images:
-// /api/v1/manga/{mangaId}/chapter/{chapterId}/page/{pageId}
+//  Chapter list:
+//  /api/v1/manga/{mangaId}/chapters?onlineFetch=false
+//
+//  Chapter detail:
+//  /api/v1/manga/{mangaId}/chapter/{index}
+//
+//  Chapter images:
+//  /api/v1/manga/{mangaId}/chapter/{chapterIndex/page/{pageIndex}
 //
 //  Created by Edgar Mejía on 20/6/21.
 //

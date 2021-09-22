@@ -5,10 +5,26 @@
 //  Created by Edgar Mejía on 18/9/21.
 //
 
+import Foundation
+
 struct Constants {
     
-    static let TACHIDESK_HOST = "http://192.168.1.2:4567"
-    
-    static let CATEGORY_API = "/api/v1/category"
+    struct General {
+        
+        static let APP_NAME = "Koi"
+        
+    }
+
+    struct API {
+        
+        struct TACHIDESK {
+            
+            static let CATEGORY = "/api/v1/category"
+            
+            static let MANGA = "/api/v1/manga"
+            
+        }
+        
+    }
     
 }

@@ -14,15 +14,27 @@ struct MangaItem: View {
     
     var body: some View {
         
-        let thumnailUrl = URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!
+        let thumnailUrl = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!
         
         VStack {
-            AsyncImage(url:  thumnailUrl, image: {
-                Image(uiImage: $0)
-                    .resizable()
-            })
-            .cornerRadius(20)
-            .shadow(radius: 1)
+            AsyncImage(
+                url: thumnailUrl,
+                transaction: Transaction(animation: .easeInOut)
+            ) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
+                case .failure:
+                    Image(systemName: "xmark.octagon.fill")
+                @unknown default:
+                    EmptyView()
+                }
+            }
             
             Text(manga.title)
                 .font(.system(size: 14))

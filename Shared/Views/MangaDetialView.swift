@@ -76,19 +76,22 @@ struct MangaDetialView: View {
                 .shadow(radius: 10)
             
             VStack(alignment: .leading) {
-                MangaDescription(title: manga.title, description: manga.description, author: manga.author)
-                
+                MangaDescription(manga: self.manga)
                 MangaDetailActions()
             }
         }
     }
     
     var mangaList: some View {
-        VStack {
+        LazyVStack {
             if self.chaptersLoaded && !self.chapters.isEmpty {
                 ForEach(chapters, id: \.id) { chapter in
-                    ChapterListItem(chapter: chapter)
+                    #if os(iOS)
+                    NavigationLink(destination: ReaderView(chapter: chapter)) {
+                        ChapterListItem(chapter: chapter)
+                    }
                     Divider()
+                    #endif
                 }
             } else if self.chaptersLoaded && self.chapters.isEmpty {
                 Text("No chapters found 🥲")
@@ -99,19 +102,28 @@ struct MangaDetialView: View {
     }
     
     var thumbnail: some View {
-        AsyncImage(
-            url: URL(string: "\(Constants.TACHIDESK_HOST)/api/v1/manga/\(manga.id)/thumbnail")!,
+        CustomAsyncImage(
+            url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!,
             image: {
                 Image(uiImage: $0)
-                    .resizable()
+                .resizable()
             }
         )
     }
     
     func fetchChapterList(mangaId: Int) {
-        MangaViewModel().getChapters(mangaId: mangaId) { chapters in
-            chaptersLoaded = true
-            self.chapters = chapters
+        MangaViewModel().getChapters(mangaId: mangaId) { result in
+            switch result {
+            case let .success(chapters):
+                self.chaptersLoaded = true
+                if chapters != nil {
+                    self.chapters = chapters!
+                }
+                
+            case let .failure(error):
+                print(error)
+                self.chaptersLoaded = true
+            }
         }
     }
     

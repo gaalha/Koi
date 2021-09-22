@@ -9,24 +9,20 @@ import SwiftUI
 
 struct MangaDescription: View {
     
-    var title: String!
-    
-    var description: String?
-    
-    var author: String?
+    var manga: Manga!
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(title)
+                Text(manga.title)
                     .fontWeight(.bold)
                     .lineLimit(3)
-                if description != nil {
-                    Text(description ?? "")
+                if manga.description != nil {
+                    Text(manga.description ?? "")
                         .lineLimit(3)
                 }
-                if author != nil {
-                    Text(author ?? "")
+                if manga.author != nil {
+                    Text(manga.author ?? "")
                         .fontWeight(.bold)
                 }
             }
@@ -35,8 +31,8 @@ struct MangaDescription: View {
     }
 }
 
-struct MangaDescription_Previews: PreviewProvider {
-    static var previews: some View {
-        MangaDescription(title: "Berserk", description: "Berserk es un manga creado por Kentaro Miura y posteriormente adaptado en anime, con un estilo épico fantástico y de fantasía oscura. Miura publicó un prototipo de Berserk en 1988.", author: "Kentaro Miura")
-    }
-}
+//struct MangaDescription_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MangaDescription()
+//    }
+//}

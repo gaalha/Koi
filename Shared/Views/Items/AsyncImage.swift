@@ -1,5 +1,5 @@
 //
-//  AsyncImage.swift
+//  CustomAsyncImage.swift
 //  Koi
 //
 //  Created by Edgar Mejía on 18/9/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AsyncImage: View {
+struct CustomAsyncImage: View {
     
     @StateObject private var loader: ImageLoader
     

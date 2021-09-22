@@ -13,7 +13,7 @@ struct Sidebar: View {
         NavigationView {
             #if os(iOS)
             content
-                .navigationTitle("Explore")
+                .navigationTitle("Koi")
             #else
             content
                 .frame(minWidth: 200, idealWidth: 250, maxWidth: 300)
@@ -33,8 +33,8 @@ struct Sidebar: View {
             NavigationLink(destination: ExploreView()) {
                 Label("Explore", systemImage: "safari")
             }
-            NavigationLink(destination: MoreView()) {
-                Label("More", systemImage: "ellipsis.circle")
+            NavigationLink(destination: SettingsView()) {
+                Label("Settings", systemImage: "gear")
             }
         }
         .listStyle(SidebarListStyle())

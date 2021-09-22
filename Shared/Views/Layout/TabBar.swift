@@ -36,11 +36,11 @@ struct TabBar: View {
             }
                 
             NavigationView {
-                MoreView()
+                SettingsView()
             }
             .tabItem {
-                Image(systemName: "ellipsis.circle")
-                Text("More")
+                Image(systemName: "gear")
+                Text("Settings")
             }
         }
     }

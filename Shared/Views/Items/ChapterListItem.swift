@@ -12,7 +12,7 @@ struct ChapterListItem: View {
     var chapter: Chapter
     
     var body: some View {
-        HStack(alignment: .center) {
+        HStack {
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(chapter.name)
                     .font(.subheadline)

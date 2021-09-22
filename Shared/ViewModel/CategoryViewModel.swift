@@ -9,29 +9,39 @@ import Foundation
 
 class CategoryViewModel {
     
-    private var apiPart: String = "/api/v1/category"
-    
-    func getAll(completion: @escaping ([Category]) -> ()) {
-        guard let url = URL(string: "\(Constants.TACHIDESK_HOST)\(apiPart)") else { return }
+    func getAll(completion: @escaping (Result<[Category]?, Error>) -> ()) {
+        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)")
+        else { return completion(.success(nil)) }
         
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if data == nil { return completion(.success(nil)) }
             let categories = try! JSONDecoder().decode([Category].self, from: data!)
             
             DispatchQueue.main.async {
-                completion(categories)
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(categories))
+                }
             }
         }
         .resume()
     }
     
-    func getOne(id: Int, completion: @escaping ([Manga]) -> ()) {
-        guard let url = URL(string: "\(Constants.TACHIDESK_HOST)\(apiPart)/\(id)") else { return }
+    func getOne(id: Int, completion: @escaping (Result<[Manga]?, Error>) -> ()) {
+        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)/\(id)")
+        else { return completion(.success(nil)) }
         
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if data == nil { return completion(.success(nil)) }
             let mangaList = try! JSONDecoder().decode([Manga].self, from: data!)
             
             DispatchQueue.main.async {
-                completion(mangaList)
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(mangaList))
+                }
             }
         }
         .resume()
