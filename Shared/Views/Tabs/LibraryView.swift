@@ -46,13 +46,14 @@ struct LibraryView: View {
                         MangaGrid(mangaList: mangaList)
                             .padding()
                     } else if mangaListLoaded && self.mangaList.isEmpty {
-                        Text("Nothing to show 🥲")
-                            .padding(.top)
-//                        HStack {
-//                            Button("Retry", action: fetchCategories)
-//                            Button("Setup Tachidesk", action: fetchCategories)
-//                        }
-//                        .buttonStyle(.bordered)
+                        VStack(alignment: .center) {
+                            Text("Nothing to show 🥲")
+                                .padding(.top)
+                            HStack {
+                                Button("Retry to load", action: fetchCategories)
+                            }
+                            .buttonStyle(.bordered)
+                        }
                     } else if !mangaListLoaded {
                         ProgressView()
                     }

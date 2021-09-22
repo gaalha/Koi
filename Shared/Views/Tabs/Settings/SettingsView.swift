@@ -15,7 +15,7 @@ struct SettingsView: View {
             Section(header: Text("Tachidesk settings")) {
                 NavigationLink(destination: TachideskOptionsView()) {
                     HStack {
-                        Text("Set Tachideks URL")
+                        Text("Set URL")
                         Spacer()
                         Text(Tachidesk().getFullHost())
                             .foregroundColor(.gray)

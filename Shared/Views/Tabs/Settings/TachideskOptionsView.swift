@@ -10,9 +10,9 @@ import Foundation
 
 struct TachideskOptionsView: View {
     
-    @AppStorage("TACHIDESK_PORT") var port = ""
+    @AppStorage("TACHIDESK_PORT") var port = Tachidesk().getPort()
     
-    @AppStorage("TACHIDESK_HOST") var host = ""
+    @AppStorage("TACHIDESK_HOST") var host = Tachidesk().getHost()
     
     var body: some View {
         VStack {

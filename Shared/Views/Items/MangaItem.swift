@@ -24,6 +24,10 @@ struct MangaItem: View {
                 switch phase {
                 case .empty:
                     ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color("ImagePlaceholder"))
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
                 case .success(let image):
                     image
                         .resizable()
@@ -31,6 +35,11 @@ struct MangaItem: View {
                         .shadow(radius: 1)
                 case .failure:
                     Image(systemName: "xmark.octagon.fill")
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color("ImagePlaceholder"))
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
                 @unknown default:
                     EmptyView()
                 }

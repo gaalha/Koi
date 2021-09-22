@@ -15,7 +15,7 @@ struct MangaGrid: View {
         if !mangaList.isEmpty {
             LazyVGrid(
                 columns: [GridItem(.adaptive(minimum: 100, maximum: 110), spacing: 10)],
-                spacing: 10
+                spacing: 5
             ) {
                 ForEach(mangaList, id: \.id) { manga in
                     VStack {
