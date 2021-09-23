@@ -11,24 +11,45 @@ struct ReaderView: View {
     
     var chapter: Chapter
     
-    @State private var hideStatusBar = false
+    @State var hideNavigationBar: Bool = false
     
     var body: some View {
         ScrollView {
             LazyVStack {
                 ForEach(0..<3) { page in
-                    CustomAsyncImage(
-                        url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/136/chapter/471/page/\(page)")!,
-                        image: {
-                            Image(uiImage: $0)
+                    CacheAsyncImage(
+                        url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/136/chapter/471/page/\(page)")!
+                    ) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image
                                 .resizable()
+                        case .failure:
+//                            Image(systemName: "xmark.octagon.fill")
+                            Button("Retry", action: retryToLoadImage)
+                                .buttonStyle(.bordered)
+                        @unknown default:
+                            EmptyView()
                         }
-                    )
+                    }
                     .aspectRatio(contentMode: .fit)
                     .frame(minHeight: 200.0)
                 }
             }
+            .onTapGesture {
+                self.hideNavigationBar.toggle()
+            }
         }
+//        .edgesIgnoringSafeArea(.all)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(chapter.name)
+        .navigationBarHidden(hideNavigationBar)
+    }
+    
+    private func retryToLoadImage() {
+        print("Retry")
     }
 }
 

@@ -72,8 +72,10 @@ struct MangaDetialView: View {
         HStack {
             thumbnail
                 .frame(width: 105, height: 150, alignment: .leading)
+                .background(Color("ImagePlaceholder"))
                 .scaledToFill()
                 .shadow(radius: 10)
+                .cornerRadius(5)
             
             VStack(alignment: .leading) {
                 MangaDescription(manga: self.manga)
@@ -102,13 +104,21 @@ struct MangaDetialView: View {
     }
     
     var thumbnail: some View {
-        CustomAsyncImage(
-            url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!,
-            image: {
-                Image(uiImage: $0)
-                .resizable()
+        CacheAsyncImage(
+            url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!
+        ) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .resizable()
+            case .failure(_):
+                Image(systemName: "xmark.octagon.fill")
+            @unknown default:
+                EmptyView()
             }
-        )
+        }
     }
     
     func fetchChapterList(mangaId: Int) {

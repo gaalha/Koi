@@ -16,40 +16,34 @@ struct MangaItem: View {
         
         let thumnailUrl = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!
         
-        VStack {
-            AsyncImage(
+        VStack(alignment: .leading) {
+            CacheAsyncImage(
                 url: thumnailUrl,
                 transaction: Transaction(animation: .easeInOut)
             ) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color("ImagePlaceholder"))
-                        .cornerRadius(5)
-                        .shadow(radius: 1)
                 case .success(let image):
                     image
                         .resizable()
-                        .cornerRadius(5)
-                        .shadow(radius: 1)
                 case .failure:
                     Image(systemName: "xmark.octagon.fill")
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color("ImagePlaceholder"))
-                        .cornerRadius(5)
-                        .shadow(radius: 1)
                 @unknown default:
                     EmptyView()
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .foregroundColor(.gray)
+            .background(Color("ImagePlaceholder"))
+            .cornerRadius(5)
+            .shadow(radius: 1)
             
             Text(manga.title)
-                .font(.system(size: 14))
+                .font(.system(size: 13))
                 .foregroundColor(Color("Text"))
                 .lineLimit(2)
-                .frame(minHeight: 40, alignment: .top)
+                .frame(minHeight: 30, alignment: .top)
         }
     }
     
