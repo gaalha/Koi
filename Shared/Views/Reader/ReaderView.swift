@@ -6,50 +6,120 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import Introspect
+#endif
 
 struct ReaderView: View {
     
     var chapter: Chapter
     
+    @State var chapterDetail: Chapter? = nil
+    
+    @State var chapterDetailLoaded: Bool = false
+    
     @State var hideNavigationBar: Bool = false
     
+    @State var drag: CGFloat = 0.0
+    
+    #if os(iOS)
+    @State var uiTabarController: UITabBarController?
+    #endif
+    
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(0..<3) { page in
-                    CacheAsyncImage(
-                        url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/136/chapter/471/page/\(page)")!
-                    ) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                        case .failure:
-//                            Image(systemName: "xmark.octagon.fill")
-                            Button("Retry", action: retryToLoadImage)
-                                .buttonStyle(.bordered)
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
-                    .aspectRatio(contentMode: .fit)
-                    .frame(minHeight: 200.0)
-                }
-            }
-            .onTapGesture {
-                self.hideNavigationBar.toggle()
-            }
-        }
-//        .edgesIgnoringSafeArea(.all)
+        content
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(chapter.name)
         .navigationBarHidden(hideNavigationBar)
+        .onAppear {
+            uiTabarController?.tabBar.isHidden = true
+            self.loadChapterDetail()
+        }
     }
     
-    private func retryToLoadImage() {
-        print("Retry")
+    var content: some View {
+        ScrollView {
+            LazyVStack {
+                if !chapterDetailLoaded {
+                    ProgressView()
+                } else if chapterDetailLoaded && chapterDetail != nil {
+//                    LazyVStack {
+                    ForEach(0..<self.chapterDetail!.pageCount!) { page in
+                        loadImage(url: getPageUrl(chapter: chapter, page: page))
+                    }
+//                    }
+    //                .onTapGesture {
+    //                    self.hideNavigationBar.toggle()
+    //                }
+                } else {
+                    Text("No pages found")
+                }
+            }
+        }
+    }
+    
+    private func loadImage(url: String) -> some View {
+        CacheAsyncImage(
+            url: URL(string: url)!
+        ) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .resizable()
+            case .failure:
+                VStack {
+                    Text(url)
+                    Button("Retry", action: {
+                        print("Reload")
+                    })
+                }
+                    .buttonStyle(.bordered)
+            @unknown default:
+                EmptyView()
+            }
+        }
+        .aspectRatio(contentMode: .fit)
+        .frame(minHeight: 200.0)
+    }
+    
+    private func loadChapterDetail() {
+        if self.chapter.pageCount! == -1 {
+            ChapterViewModel().getDetail(
+                mangaId: self.chapter.mangaId,
+                chapterIndex: self.chapter.index!,
+                completion: { result in
+                    
+                switch result {
+                case let .success(chapter):
+                    self.chapterDetailLoaded = true
+                    if chapter != nil {
+                        self.chapterDetail = chapter!
+                    }
+                    
+                case let .failure(error):
+                    print(error)
+                    self.chapterDetailLoaded = true
+                }
+            })
+        } else {
+            print("\(self.chapter.pageCount!)")
+            self.chapterDetail = self.chapter
+            self.chapterDetailLoaded = true
+        }
+    }
+    
+    private func retryToLoadImage(url: String) -> some View {
+        return loadImage(url: url)
+    }
+    
+    private func getPageUrl(chapter: Chapter, page: Int) -> String {
+        print(page)
+        let mangaId = "\(chapter.mangaId!)"
+        let chapterNumber = "\(chapter.index!)"
+        
+        return "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(mangaId)/chapter/\(chapterNumber)/page/\(page)"
     }
 }
 

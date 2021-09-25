@@ -40,6 +40,12 @@
 		DF5A1D2D26F1BA2700D425A8 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = DF5A1D2C26F1BA2700D425A8 /* Introspect */; };
 		DF5E6D3A26FC0CF200A4C44B /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E6D3926FC0CF200A4C44B /* CacheAsyncImage.swift */; };
 		DF5E6D3B26FC0CF200A4C44B /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5E6D3926FC0CF200A4C44B /* CacheAsyncImage.swift */; };
+		DF6A673126FE33A3001A8FF1 /* ReaderViewPaginated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673026FE33A3001A8FF1 /* ReaderViewPaginated.swift */; };
+		DF6A673326FE3FDA001A8FF1 /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673226FE3FDA001A8FF1 /* ReaderViewModel.swift */; };
+		DF6A673426FE3FDA001A8FF1 /* ReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673226FE3FDA001A8FF1 /* ReaderViewModel.swift */; };
+		DF6A673626FEB938001A8FF1 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673526FEB938001A8FF1 /* ZoomableScrollView.swift */; };
+		DF6A673726FEB938001A8FF1 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673526FEB938001A8FF1 /* ZoomableScrollView.swift */; };
+		DF8504D526FD695100669978 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = DF8504D426FD695100669978 /* PartialSheet */; };
 		DF9026AB2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
 		DF9026AC2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
 		DFAF2AD126805DF60098D268 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2AD026805DF60098D268 /* Manga.swift */; };
@@ -94,6 +100,9 @@
 		DF1F0C1A268D95920002B06E /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		DF3DD2BF26F828390020C471 /* Tachidesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tachidesk.swift; sourceTree = "<group>"; };
 		DF5E6D3926FC0CF200A4C44B /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
+		DF6A673026FE33A3001A8FF1 /* ReaderViewPaginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewPaginated.swift; sourceTree = "<group>"; };
+		DF6A673226FE3FDA001A8FF1 /* ReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewModel.swift; sourceTree = "<group>"; };
+		DF6A673526FEB938001A8FF1 /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailActions.swift; sourceTree = "<group>"; };
 		DFAF2AD026805DF60098D268 /* Manga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manga.swift; sourceTree = "<group>"; };
 		DFAF2AD326805E100098D268 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
@@ -118,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF8504D526FD695100669978 /* PartialSheet in Frameworks */,
 				DF5A1D2D26F1BA2700D425A8 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +243,7 @@
 				DF16FFED26F56BE9008BA976 /* CategoryViewModel.swift */,
 				DFF543F826F5BA300031B991 /* MangaViewModel.swift */,
 				DFBD8AF126F6B1A400E55672 /* ChapterViewModel.swift */,
+				DF6A673226FE3FDA001A8FF1 /* ReaderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -263,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				DFBD8AEE26F6A69400E55672 /* Constants.swift */,
+				DF6A673526FEB938001A8FF1 /* ZoomableScrollView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -272,6 +284,7 @@
 			children = (
 				DFDD0B2326D4502C005944A4 /* ReaderView.swift */,
 				DFDD0B2526D4503C005944A4 /* ReaderControllers.swift */,
+				DF6A673026FE33A3001A8FF1 /* ReaderViewPaginated.swift */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -314,6 +327,7 @@
 			name = "Koi (iOS)";
 			packageProductDependencies = (
 				DF5A1D2C26F1BA2700D425A8 /* Introspect */,
+				DF8504D426FD695100669978 /* PartialSheet */,
 			);
 			productName = "Koi (iOS)";
 			productReference = DF01C9F0267F223100A565D3 /* Koi.app */;
@@ -364,6 +378,7 @@
 			mainGroup = DF01C9E3267F222E00A565D3;
 			packageReferences = (
 				DF5A1D2B26F1BA2700D425A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				DF8504D326FD695100669978 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 			);
 			productRefGroup = DF01C9F1267F223100A565D3 /* Products */;
 			projectDirPath = "";
@@ -409,11 +424,13 @@
 				DF0B6F562680FF4C001FF9D3 /* MangaDescription.swift in Sources */,
 				DF0B6F5F26810084001FF9D3 /* ChapterListItem.swift in Sources */,
 				DFBD8AEF26F6A69400E55672 /* Constants.swift in Sources */,
+				DF6A673626FEB938001A8FF1 /* ZoomableScrollView.swift in Sources */,
 				DF1214A12683D29F00421FCE /* DownloadButton.swift in Sources */,
 				DFAF2AE026806A7D0098D268 /* ExploreView.swift in Sources */,
 				DFAF2AD126805DF60098D268 /* Manga.swift in Sources */,
 				DF0B6F592680FFEA001FF9D3 /* MangaDetialView.swift in Sources */,
 				DF01C9FE267F223100A565D3 /* ContentView.swift in Sources */,
+				DF6A673126FE33A3001A8FF1 /* ReaderViewPaginated.swift in Sources */,
 				DF01C9FC267F223100A565D3 /* KoiApp.swift in Sources */,
 				DFAF2AD426805E100098D268 /* Chapter.swift in Sources */,
 				DFAF2ADD26806A680098D268 /* LibraryView.swift in Sources */,
@@ -430,6 +447,7 @@
 				DF0B6F532680FF14001FF9D3 /* DescriptionGradient.swift in Sources */,
 				DFAF2AE326806A8F0098D268 /* SettingsView.swift in Sources */,
 				DF16FFE526F53AB2008BA976 /* Category.swift in Sources */,
+				DF6A673326FE3FDA001A8FF1 /* ReaderViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,9 +466,11 @@
 				DF0B6F512680FEAB001FF9D3 /* MangaItem.swift in Sources */,
 				DF1214A22683D29F00421FCE /* DownloadButton.swift in Sources */,
 				DFF2413626FAB7E800BB6D11 /* TachideskOptionsView.swift in Sources */,
+				DF6A673426FE3FDA001A8FF1 /* ReaderViewModel.swift in Sources */,
 				DFB4D998268916FF005BDD8A /* MangaGrid.swift in Sources */,
 				DFAF2AE726806C1E0098D268 /* HistoryView.swift in Sources */,
 				DFBD8AF026F6A69400E55672 /* Constants.swift in Sources */,
+				DF6A673726FEB938001A8FF1 /* ZoomableScrollView.swift in Sources */,
 				DFAF2AD226805DF60098D268 /* Manga.swift in Sources */,
 				DF5E6D3B26FC0CF200A4C44B /* CacheAsyncImage.swift in Sources */,
 				DF16FFEC26F54E72008BA976 /* Extension.swift in Sources */,
@@ -645,7 +665,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soda.Koi;
 				PRODUCT_NAME = Koi;
 				SDKROOT = macosx;
@@ -670,7 +690,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soda.Koi;
 				PRODUCT_NAME = Koi;
 				SDKROOT = macosx;
@@ -719,6 +739,14 @@
 				minimumVersion = 0.1.3;
 			};
 		};
+		DF8504D326FD695100669978 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -726,6 +754,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DF5A1D2B26F1BA2700D425A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		DF8504D426FD695100669978 /* PartialSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF8504D326FD695100669978 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

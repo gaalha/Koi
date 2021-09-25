@@ -22,9 +22,19 @@ struct MangaDetialView: View {
     
     @State var chaptersLoaded: Bool = false
     
+    @StateObject var readerData = ReaderViewModel()
+    
     var body: some View {
         #if os(iOS)
         content
+            .navigationBarHidden(true)
+            .overlay(
+                ZStack {
+                    if self.readerData.showMangaReader && self.readerData.currentChapter != nil {
+                        ReaderViewPaginated().environmentObject(self.readerData)
+                    }
+                }
+            )
             .edgesIgnoringSafeArea(.all)
             .introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = true
@@ -89,8 +99,12 @@ struct MangaDetialView: View {
             if self.chaptersLoaded && !self.chapters.isEmpty {
                 ForEach(chapters, id: \.id) { chapter in
                     #if os(iOS)
-                    NavigationLink(destination: ReaderView(chapter: chapter)) {
-                        ChapterListItem(chapter: chapter)
+                    ChapterListItem(chapter: chapter)
+                    .onTapGesture {
+                        withAnimation {
+                            self.readerData.showMangaReader = true
+                            self.readerData.currentChapter = chapter
+                        }
                     }
                     Divider()
                     #endif

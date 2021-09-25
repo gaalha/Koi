@@ -18,13 +18,13 @@ import SwiftUI
 
 struct Chapter: Identifiable, Decodable {
     
-    var id = UUID()
+    var id = UUID().uuidString
     
     var name: String!
     
     var url: String!
     
-    var chapterNumber: Double!
+    var chapterNumber: Double?
     
     var scanlator: String?
     

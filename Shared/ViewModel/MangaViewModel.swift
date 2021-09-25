@@ -8,8 +8,6 @@ import Foundation
 
 class MangaViewModel {
     
-    private var apiPart: String = "/api/v1/manga"
-    
     func getOne(id: Int, completion: @escaping (Result<Manga?, Error>) -> ()) {
         guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(id)")
         else { return completion(.success(nil)) }
