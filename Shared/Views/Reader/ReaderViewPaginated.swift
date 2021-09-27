@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ReaderViewPaginated: View {
     
+    var chapter: Chapter
+    
     @State var chapterDetail: Chapter? = nil
     
     @State var chapterDetailLoaded: Bool = false
-    
-    @EnvironmentObject var readerData: ReaderViewModel
     
     @State var numberOfPages: Int = 0
     
@@ -22,6 +22,8 @@ struct ReaderViewPaginated: View {
     @State var showOrientationIndicator: Bool = true
     
     @State var showReaderControllers: Bool = true
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         content
@@ -84,13 +86,7 @@ struct ReaderViewPaginated: View {
     }
     
     var orientationIndicator: some View {
-        VStack {
-            Image(systemName: "rectangle.expand.vertical")
-                .rotationEffect(.degrees(-90))
-            Text("Horizontal pagination").padding(.top)
-        }
-        .padding()
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16.0))
+        AlertItem(icon: "rectangle.expand.vertical", message: "Horizontal pagination")
     }
     
     var pageNumberIndicator: some View {
@@ -103,18 +99,8 @@ struct ReaderViewPaginated: View {
     
     var closeButton: some View {
         Button(action: {
-            withAnimation(.default) {
-                self.readerData.showMangaReader.toggle()
-            }
-        }, label: {
-            Image(systemName: "xmark")
-                .frame(width: 5, height: 5)
-                .foregroundColor(.white)
-                .padding()
-                .background(.ultraThinMaterial)
-                .clipShape(Circle())
-        })
-            .padding(30)
+            self.presentationMode.wrappedValue.dismiss()
+        }, label: {CloseButton()}).padding(30)
     }
     
     private func loadImage(url: String) -> some View {
@@ -145,12 +131,11 @@ struct ReaderViewPaginated: View {
     }
     
     private func loadChapterDetail() {
-        if self.readerData.currentChapter!.pageCount! == -1 {
+        if self.chapter.pageCount! == -1 {
             ChapterViewModel().getDetail(
-                mangaId: self.readerData.currentChapter!.mangaId,
-                chapterIndex: self.readerData.currentChapter!.index!,
+                mangaId: self.chapter.mangaId,
+                chapterIndex: self.chapter.index!,
                 completion: { result in
-                    
                 switch result {
                 case let .success(chapter):
                     self.chapterDetailLoaded = true
@@ -165,9 +150,9 @@ struct ReaderViewPaginated: View {
                 }
             })
         } else {
-            self.chapterDetail = self.readerData.currentChapter!
+            self.chapterDetail = self.chapter
             self.chapterDetailLoaded = true
-            self.numberOfPages =  self.readerData.currentChapter!.pageCount ?? 0
+            self.numberOfPages =  self.chapter.pageCount ?? 0
         }
     }
     

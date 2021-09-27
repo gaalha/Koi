@@ -39,6 +39,14 @@ struct TabBar: View {
                 SettingsView()
             }
             .tabItem {
+                Image(systemName: "puzzlepiece.extension")
+                Text("Extensions")
+            }
+                
+            NavigationView {
+                SettingsView()
+            }
+            .tabItem {
                 Image(systemName: "gear")
                 Text("Settings")
             }

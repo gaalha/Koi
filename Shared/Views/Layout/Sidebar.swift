@@ -34,6 +34,9 @@ struct Sidebar: View {
                 Label("Explore", systemImage: "safari")
             }
             NavigationLink(destination: SettingsView()) {
+                Label("Extensions", systemImage: "puzzlepiece.extension")
+            }
+            NavigationLink(destination: SettingsView()) {
                 Label("Settings", systemImage: "gear")
             }
         }
