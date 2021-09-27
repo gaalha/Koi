@@ -26,7 +26,7 @@ struct DetailView: View {
             .overlay(closeButton, alignment: .topTrailing)
             .ignoresSafeArea(.container, edges: .top)
             .onAppear {
-                fetchChapterList(mangaId: manga.id)
+                self.fetchChapterList(mangaId: self.manga.id)
             }
     }
     

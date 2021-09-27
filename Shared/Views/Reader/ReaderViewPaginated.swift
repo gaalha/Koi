@@ -86,7 +86,7 @@ struct ReaderViewPaginated: View {
     }
     
     var orientationIndicator: some View {
-        AlertItem(icon: "rectangle.expand.vertical", message: "Horizontal pagination")
+        AlertItem(icon: "arrow.right.square.fill", message: "Horizontal pagination")
     }
     
     var pageNumberIndicator: some View {
