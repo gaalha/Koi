@@ -23,7 +23,7 @@ struct DetailView: View {
     
     var body: some View {
         content
-            .overlay(closeButton, alignment: .topTrailing)
+            .overlay(closeButton.offset(y: 25), alignment: .topTrailing)
             .ignoresSafeArea(.container, edges: .top)
             .onAppear {
                 self.fetchChapterList(mangaId: self.manga.id)
@@ -89,18 +89,50 @@ struct DetailView: View {
                 .frame(width: 100, height: 150)
                 .cornerRadius(5)
                 .scaleEffect(1 + calculateTitleAndThumbnailPosition() * 1.5, anchor: .bottomLeading)
+                .offset(y: calculateTitleAndThumbnailPosition() * -50)
 
             VStack(alignment: .leading) {
                 Text(manga.title)
                     .fontWeight(.bold)
                     .lineLimit(3)
-                    .offset(x: calculateTitleAndThumbnailPosition() * 150, y: calculateTitleAndThumbnailPosition() * -260)
+                    .offset(x: calculateTitleAndThumbnailPosition() * 150, y: calculateTitleAndThumbnailPosition() * -325)
                 Text(manga.description ?? "")
-                    .lineLimit(5)
+                    .lineLimit(4)
                     .opacity(1 + getProgress())
                 Text(manga.author ?? "")
                     .fontWeight(.bold)
                     .opacity(1 + getProgress())
+                
+                HStack {
+                    Button(action: {
+                        print("Touched")
+                    }, label: {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Library")
+                        }
+                    })
+                        .buttonStyle(.bordered)
+                        .background(.gray)
+                        .foregroundColor(.black)
+                        .cornerRadius(18)
+                        .opacity(1 + getProgress())
+                    
+                    Button(action: {
+                        print("Touched")
+                    }, label: {
+                        HStack {
+                            Image(systemName: "minus")
+                            Text("Library")
+                        }
+                    })
+                        .buttonStyle(.bordered)
+                        .background(.tint)
+                        .foregroundColor(.white)
+                        .cornerRadius(18)
+                        .opacity(1 + getProgress())
+                }
+                
             }.padding(.leading)
 
             Spacer()
