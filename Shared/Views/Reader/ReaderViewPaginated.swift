@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct ReaderViewPaginated: View {
     
@@ -104,18 +105,22 @@ struct ReaderViewPaginated: View {
     }
     
     private func loadImage(url: String) -> some View {
-        CacheAsyncImage(
+        CachedAsyncImage(
             url: URL(string: url)!
         ) { phase in
             switch phase {
             case .empty:
                 ProgressView()
             case .success(let image):
+                #if os(iOS)
                 ZoomableScrollView {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }
+                #else
+                // TODO
+                #endif
             case .failure:
                 VStack {
                     Text(url)

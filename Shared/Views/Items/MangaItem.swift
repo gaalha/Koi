@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import CachedAsyncImage
 
 struct MangaItem: View {
     
@@ -17,7 +18,7 @@ struct MangaItem: View {
         let thumnailUrl = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!
         
         VStack(alignment: .leading) {
-            CacheAsyncImage(
+            CachedAsyncImage(
                 url: thumnailUrl,
                 transaction: Transaction(animation: .easeInOut)
             ) { phase in

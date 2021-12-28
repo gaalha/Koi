@@ -23,6 +23,7 @@ struct TachideskOptionsView: View {
     @State var showTestAlert: Bool = false
     
     var body: some View {
+        #if os(iOS)
         content
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Set Tachideks URL")
@@ -36,6 +37,9 @@ struct TachideskOptionsView: View {
                 }.disabled(self.isTestingConnection)
             }
         }
+        #else
+        content
+        #endif
     }
     
     var content: some View {
@@ -44,14 +48,14 @@ struct TachideskOptionsView: View {
                 Form {
                     Section {
                         HStack {
-                            Text("HOST:")
+                            Text("Host:")
                                 .foregroundColor(.gray)
                             Spacer()
                             TextField("", text: $host)
                         }
                         
                         HStack {
-                            Text("PORT:")
+                            Text("Port:")
                                 .foregroundColor(.gray)
                             Spacer()
                             TextField("", text: $port)

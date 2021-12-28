@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 #if os(iOS)
 import Introspect
 #endif
@@ -59,7 +60,7 @@ struct ReaderView: View {
     }
     
     private func loadImage(url: String) -> some View {
-        CacheAsyncImage(
+        CachedAsyncImage(
             url: URL(string: url)!
         ) { phase in
             switch phase {

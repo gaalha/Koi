@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Refresh
 
 struct LibraryView: View {
     
@@ -19,6 +20,11 @@ struct LibraryView: View {
     
     @State var mangaListLoaded: Bool = false
     
+    // Refresh plugin:
+    @State private var headerRefreshing: Bool = false
+    @State private var footerRefreshing: Bool = false
+    @State private var noMore: Bool = false
+    
     var body: some View {
         content
             .navigationTitle("Library")
@@ -29,6 +35,15 @@ struct LibraryView: View {
     
     var content: some View {
         ScrollView {
+            RefreshHeader(refreshing: $headerRefreshing, action: fetchCategories) { progress in
+                if self.headerRefreshing {
+//                    Text("refreshing...")
+                    ProgressView()
+                } else {
+                    Text("Pull to refresh")
+                }
+            }
+            
             if !categoriesLoaded && !mangaListLoaded {
                 VStack(alignment: .leading) {
                     ProgressView()
@@ -59,7 +74,18 @@ struct LibraryView: View {
                     }
                 }
             }
+            
+//            RefreshFooter(refreshing: $footerRefreshing, action: fetchCategories) {
+//                if self.noMore {
+//                    Text("No more data !")
+//                } else {
+//                    Text("refreshing...")
+//                }
+//            }
+//            .noMore(noMore)
+//            .preload(offset: 50)
         }
+        .enableRefresh()
     }
     
     var categoriesSection: some View {
@@ -85,12 +111,14 @@ struct LibraryView: View {
                     self.categories = categories!
                     fetchOneCategory(categoryId: categorySelected)
                 } else {
+                    self.headerRefreshing = false
                     self.mangaListLoaded = true
                 }
             
             case let .failure(error):
                 print(error)
                 self.categoriesLoaded = true
+                self.headerRefreshing = false
             }
         }
     }
@@ -100,6 +128,7 @@ struct LibraryView: View {
             switch result {
             case let .success(mangaList):
                 self.mangaListLoaded = true
+                self.headerRefreshing = false
                 if mangaList != nil {
                     self.mangaList = mangaList!
                 }
@@ -107,6 +136,7 @@ struct LibraryView: View {
             case let .failure(error):
                 print(error)
                 self.mangaListLoaded = true
+                self.headerRefreshing = false
             }
         })
     }
