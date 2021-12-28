@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+struct About: Decodable {
+    
+    var name: String!
+    
+    var version: String!
+    
+    var revision: String!
+    
+    var buildType: String!
+    
+//    var buildTime: String?
+    
+    var github: String!
+    
+    var discord: String!
+    
+}

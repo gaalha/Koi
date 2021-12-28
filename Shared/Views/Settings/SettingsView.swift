@@ -10,16 +10,22 @@ import Foundation
 
 struct SettingsView: View {
     
+    @AppStorage("HIDE_NSFW") var hideNsfw = false
+    
     var body: some View {
         Form {
-            Section(header: Text("Tachidesk settings")) {
+            Section(header: Text("Tachidesk")) {
                 NavigationLink(destination: TachideskOptionsView()) {
                     HStack {
-                        Text("Set URL")
+                        Text("Server Address")
                         Spacer()
                         Text(Tachidesk().getFullHost())
                             .foregroundColor(.gray)
                     }
+                }
+                
+                NavigationLink(destination: TachideskAboutView()) {
+                    Text("About Tachidesk")
                 }
             }
             
@@ -30,27 +36,40 @@ struct SettingsView: View {
             
             Section(header: Text("Library")) {
                 Text("Actualization frecuence")
-                Text("Edit categories")
-                Text("Default category")
+                Text("Categories")
+//                Text("Default category")
+                Toggle(isOn: $hideNsfw, label: {
+                    Text("Hide NSFW content")
+                })
             }
             
             Section(header: Text("Reader")) {
-                Text("Default reader mode")
+                HStack {
+                    Text("Default mode")
+                    Spacer()
+                    Text("Horizontal")
+                        .foregroundColor(.gray)
+                }
                 Text("Background color")
                 
-                Toggle(isOn: .constant(true), label: {
-                    Text("Tap screen")
-                })
-                
-                Toggle(isOn: .constant(true), label: {
-                    Text("Volumen keys")
-                })
+//                Toggle(isOn: .constant(true), label: {
+//                    Text("Tap screen")
+//                })
+//
+//                Toggle(isOn: .constant(true), label: {
+//                    Text("Volumen keys")
+//                })
             }
             
-            Section(header: Text("Information"), footer: Text("v0.0.1")) {
+            Section(header: Text("About Tachiyomi")) {
+                Link("Github", destination: URL(string: "https://github.com/edgarMejia/Koi")!)
+                Link("Discord", destination: URL(string: "https://github.com/edgarMejia/Koi")!)
+            }
+            
+            Section(header: Text("About Koi"), footer: Text("v0.0.1")) {
                 Text("Changelog")
-                Text("Discord")
-                Text("Support on Patreon")
+                Link("Github", destination: URL(string: "https://github.com/edgarMejia/Koi")!)
+                Link("Support on Patreon", destination: URL(string: "https://www.patreon.com/EMMejia")!)
             }
         }
         .navigationTitle("Settings")

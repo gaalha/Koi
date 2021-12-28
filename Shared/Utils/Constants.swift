@@ -13,15 +13,21 @@ struct Constants {
         
         static let APP_NAME = "Koi"
         
+        static let APP_VERSION = "v0.0.2"
+        
     }
 
     struct API {
         
+        static let BASE = "/api/v1"
+        
         struct TACHIDESK {
             
-            static let CATEGORY = "/api/v1/category"
+            static let CATEGORY = "\(BASE)/category"
             
-            static let MANGA = "/api/v1/manga"
+            static let MANGA = "\(BASE)/manga"
+            
+            static let SETTING = "\(BASE)/settings"
             
         }
         
