@@ -10,13 +10,11 @@ import Refresh
 
 struct LibraryView: View {
     
+    @StateObject private var categoryViewModel = CategoryViewModel()
+    
     @State var categorySelected = 0
     
-    @State var categories: [Category] = []
-    
     @State var categoriesLoaded: Bool = false
-    
-    @State var mangaList: [Manga] = []
     
     @State var mangaListLoaded: Bool = false
     
@@ -52,15 +50,15 @@ struct LibraryView: View {
             } else {
                 VStack(spacing: 0) {
                     // Categories
-                    if categoriesLoaded && !self.categories.isEmpty {
+                    if categoriesLoaded && !categoryViewModel.categories.isEmpty {
                         categoriesSection
                     }
                     
                     // Library
-                    if mangaListLoaded && !self.mangaList.isEmpty {
-                        MangaGrid(mangaList: mangaList)
+                    if mangaListLoaded && !categoryViewModel.mangaList.isEmpty {
+                        MangaGrid(mangaList: categoryViewModel.mangaList)
                             .padding()
-                    } else if mangaListLoaded && self.mangaList.isEmpty {
+                    } else if mangaListLoaded && categoryViewModel.mangaList.isEmpty {
                         VStack(alignment: .center) {
                             Text("Nothing to show 🥲")
                                 .padding(.top)
@@ -74,23 +72,13 @@ struct LibraryView: View {
                     }
                 }
             }
-            
-//            RefreshFooter(refreshing: $footerRefreshing, action: fetchCategories) {
-//                if self.noMore {
-//                    Text("No more data !")
-//                } else {
-//                    Text("refreshing...")
-//                }
-//            }
-//            .noMore(noMore)
-//            .preload(offset: 50)
         }
         .enableRefresh()
     }
     
     var categoriesSection: some View {
         Picker("", selection: $categorySelected) {
-            ForEach(self.categories, id: \.id) { category in
+            ForEach(categoryViewModel.categories, id: \.id) { category in
                 Text(category.name)
             }
         }
@@ -103,42 +91,36 @@ struct LibraryView: View {
     }
     
     func fetchCategories() {
-        CategoryViewModel().getAll { result in
-            switch result {
-            case let .success(categories):
-                self.categoriesLoaded = true
-                if categories != nil {
-                    self.categories = categories!
-                    fetchOneCategory(categoryId: categorySelected)
-                } else {
-                    self.headerRefreshing = false
-                    self.mangaListLoaded = true
-                }
-            
-            case let .failure(error):
-                print(error)
+        categoryViewModel.getAll() { err in
+            if let err = err {
+                print(err)
                 self.categoriesLoaded = true
                 self.headerRefreshing = false
+                return
+            }
+            
+            self.categoriesLoaded = true
+            if categoryViewModel.category != nil {
+                fetchOneCategory(categoryId: categorySelected)
+            } else {
+                self.headerRefreshing = false
+                self.mangaListLoaded = true
             }
         }
     }
     
     func fetchOneCategory(categoryId: Int) {
-        CategoryViewModel().getOne(id: categoryId, completion: { result in
-            switch result {
-            case let .success(mangaList):
+        categoryViewModel.getOne(id: categoryId) { err in
+            if let err = err {
+                print(err)
                 self.mangaListLoaded = true
                 self.headerRefreshing = false
-                if mangaList != nil {
-                    self.mangaList = mangaList!
-                }
-                
-            case let .failure(error):
-                print(error)
-                self.mangaListLoaded = true
-                self.headerRefreshing = false
+                return
             }
-        })
+            
+            self.mangaListLoaded = true
+            self.headerRefreshing = false
+        }
     }
 }
 

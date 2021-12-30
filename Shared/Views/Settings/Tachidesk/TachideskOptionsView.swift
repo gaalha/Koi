@@ -10,6 +10,8 @@ import Foundation
 
 struct TachideskOptionsView: View {
     
+    @StateObject private var viewModel = CategoryViewModel()
+    
     @AppStorage("TACHIDESK_PORT") var port = Tachidesk().getPort()
     
     @AppStorage("TACHIDESK_HOST") var host = Tachidesk().getHost()
@@ -81,19 +83,13 @@ struct TachideskOptionsView: View {
     }
     
     func testConnection() {
-        CategoryViewModel().getAll { result in
-            switch result {
-            case let .success(category):
-                if category==nil {
-                    setErrorResult()
-                } else {
-                    setSuccessResult()
-                }
-            
-            case let .failure(error):
-                print(error)
+        viewModel.getAll() { err in
+            if err != nil {
                 setErrorResult()
+                return
             }
+            
+            setSuccessResult()
         }
     }
     

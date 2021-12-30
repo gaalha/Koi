@@ -23,4 +23,11 @@ struct Category: Identifiable, Decodable {
     
     let `default`: Bool!
     
+//    init(id: Int? = nil, order: Int? = nil, name: String? = nil, default: Bool? = nil) {
+//        self.id = id ?? 0
+//        self.order = order ?? 0
+//        self.name = name ?? ""
+//        self.default = `default` ?? false
+//    }
+    
 }

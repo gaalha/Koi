@@ -12,7 +12,7 @@ class Tachidesk {
     
     @AppStorage("TACHIDESK_PORT") var TACHIDESK_PORT = "4567"
     
-    @AppStorage("TACHIDESK_HOST") var TACHIDESK_HOST = "http://192.168.1.1"
+    @AppStorage("TACHIDESK_HOST") var TACHIDESK_HOST = "http://192.168.1.19"
     
     func getPort() -> String {
         return self.TACHIDESK_PORT

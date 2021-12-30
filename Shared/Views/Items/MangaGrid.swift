@@ -13,6 +13,8 @@ struct MangaGrid: View {
     
     @State var selectedManga: Manga?
     
+    @AppStorage("HIDE_NSFW") var hideNsfw = false
+    
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
@@ -24,33 +26,49 @@ struct MangaGrid: View {
                 spacing: 5
             ) {
                 ForEach(self.mangaList) { manga in
-                    #if os(iOS)
-                    if horizontalSizeClass == .compact {
-                        getMangaItem(manga: manga)
-                            .onTapGesture {
-                                self.selectedManga = manga
-                            }
-                            .fullScreenCover(item: $selectedManga) { presentedItem in
-                                DetailView(manga: presentedItem)
-                            }
-                    } else {
-                        getMangaItem(manga: manga)
-                            .onTapGesture {
-                                self.selectedManga = manga
-                            }
-                            .sheet(item: $selectedManga) { presentedItem in
-                                DetailView(manga: presentedItem)
-                            }
+                    if !hideNsfw {
+                        self.getGridItem(manga: manga)
+                    } else if hideNsfw {
+                        if manga.source == nil || !(manga.source?.isNsfw ?? true) {
+                            self.getGridItem(manga: manga)
+                        }
+//                        else if manga.source == nil { self.getGridItem(manga: manga) }
                     }
-                    #else
-                    // macOS ...
-                    MangaItem(manga: manga)
-                        .frame(height: 240)
-                    #endif
                 }
             }
+            Text("Total: \(self.mangaList.count)")
+                .font(.footnote)
+                .foregroundColor(.gray)
         } else {
             EmptyView()
+        }
+    }
+    
+    func getGridItem(manga: Manga) -> some View {
+        VStack {
+            #if os(iOS)
+            if horizontalSizeClass == .compact {
+                getMangaItem(manga: manga)
+                    .onTapGesture {
+                        self.selectedManga = manga
+                    }
+                    .fullScreenCover(item: $selectedManga) { presentedItem in
+                        DetailView(manga: presentedItem)
+                    }
+            } else {
+                getMangaItem(manga: manga)
+                    .onTapGesture {
+                        self.selectedManga = manga
+                    }
+                    .sheet(item: $selectedManga) { presentedItem in
+                        DetailView(manga: presentedItem)
+                    }
+            }
+            #else
+            // macOS ...
+            MangaItem(manga: manga)
+                .frame(height: 240)
+            #endif
         }
     }
     
