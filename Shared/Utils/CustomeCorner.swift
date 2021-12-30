@@ -4,7 +4,7 @@
 //
 //  Created by Edgar Mejía on 25/9/21.
 //
-
+#if !os(macOS)
 import SwiftUI
 
 struct CustomCorner: Shape {
@@ -20,3 +20,4 @@ struct CustomCorner: Shape {
     }
     
 }
+#endif

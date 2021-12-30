@@ -4,7 +4,7 @@
 //
 //  Created by Edgar Mejía on 25/9/21.
 //
-
+#if !os(macOS)
 import SwiftUI
 import UIKit
 
@@ -77,3 +77,4 @@ struct RefreshableScrollView<Content: View>: UIViewRepresentable {
     }
     
 }
+#endif

@@ -6,7 +6,7 @@
 //  Implemented by Edgar Mejía on 24/9/21.
 //  From: https://github.com/jtbandes/SpacePOD/blob/main/SpacePOD/ZoomableScrollView.swift
 //
-
+#if !os(macOS)
 import UIKit
 import SwiftUI
 import Combine
@@ -190,3 +190,4 @@ fileprivate struct ZoomableScrollViewImpl<Content: View>: UIViewControllerRepres
 public func mutate<T>(_ arg: inout T, _ body: (inout T) -> Void) {
     body(&arg)
 }
+#endif
