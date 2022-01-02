@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class CategoryViewModel: ObservableObject {
     
@@ -18,39 +19,51 @@ class CategoryViewModel: ObservableObject {
     @Published var mangaList: [Manga] = []
     
     func getAll(completion: @escaping (Error?) -> ()) {
-        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)")
-        else { return completion(nil) }
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)"
         
-        api.GET(url: url, completion: { response in
-            switch response {
-            case let .success(data):
-                if data == nil { return completion(nil) }
-                self.categories = try! JSONDecoder().decode([Category].self, from: data!)
+        AF.request(url).responseDecodable(of: [Category].self) { response in
+            switch response.result {
+            case .success(_):
+                self.categories = response.value!
                 completion(nil)
-                
-            case let .failure(error):
+            case .failure(let error):
                 completion(error)
             }
-            
-        })
+        }
     }
     
     func getOne(id: Int, completion: @escaping (Error?) -> ()) {
-        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)/\(id)")
-        else { return completion(nil) }
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)/\(id)"
         
-        api.GET(url: url, completion: { response in
-            switch response {
-            case let .success(data):
-                if data == nil { return completion(nil) }
-                self.mangaList = try! JSONDecoder().decode([Manga].self, from: data!)
+        AF.request(url).responseDecodable(of: [Manga].self) { response in
+            switch response.result {
+            case .success(_):
+                self.mangaList = response.value!
                 completion(nil)
-                
-            case let .failure(error):
+            case .failure(let error):
                 completion(error)
             }
-            
-        })
+        }
+    }
+    
+    func saveOne(name: String, default: Bool, completion: @escaping (Error?) -> ()) {
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.CATEGORY)/"
+        let params = ["name": name, "default": `default`] as [String : Any]
+        
+        AF.request(url, method: .post, parameters: params).response { response in
+            switch response.result {
+            case .success(_):
+                if let status = response.response?.statusCode {
+                    if status == 200 {
+                        completion(nil)
+                    } else {
+                        break
+                    }
+                }
+            case .failure(let error):
+                completion(error)
+            }
+        }
     }
     
 }

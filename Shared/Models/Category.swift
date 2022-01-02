@@ -13,7 +13,7 @@
 
 import SwiftUI
 
-struct Category: Identifiable, Decodable {
+struct Category: Identifiable, Decodable, Encodable {
     
     let id: Int
     

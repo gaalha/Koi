@@ -13,6 +13,11 @@ struct SettingsView: View {
     @AppStorage("HIDE_NSFW") var hideNsfw = false
     
     var body: some View {
+        content
+            .navigationTitle("Settings")
+    }
+    
+    var content: some View {
         Form {
             Section(header: Text("Tachidesk")) {
                 NavigationLink(destination: TachideskOptionsView()) {
@@ -36,7 +41,9 @@ struct SettingsView: View {
             
             Section(header: Text("Library")) {
                 Text("Actualization frecuence")
-                Text("Categories")
+                NavigationLink(destination: CategoryView()) {
+                    Text("Categories")
+                }
 //                Text("Default category")
                 Toggle(isOn: $hideNsfw, label: {
                     Text("Hide NSFW content")
@@ -72,7 +79,6 @@ struct SettingsView: View {
                 Link("Support on Patreon", destination: URL(string: "https://www.patreon.com/EMMejia")!)
             }
         }
-        .navigationTitle("Settings")
     }
 }
 

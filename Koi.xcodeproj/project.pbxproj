@@ -33,6 +33,11 @@
 		DF16FFEF26F56BEA008BA976 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF16FFED26F56BE9008BA976 /* CategoryViewModel.swift */; };
 		DF1F0C1B268D95920002B06E /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1F0C1A268D95920002B06E /* Source.swift */; };
 		DF1F0C1C268D95920002B06E /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1F0C1A268D95920002B06E /* Source.swift */; };
+		DF34595C277E37D60060D4C3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DF34595B277E37D60060D4C3 /* Alamofire */; };
+		DF34595E277E42440060D4C3 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF34595D277E42440060D4C3 /* CategoryView.swift */; };
+		DF34595F277E42440060D4C3 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF34595D277E42440060D4C3 /* CategoryView.swift */; };
+		DF345962277EC8F00060D4C3 /* CategoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF345961277EC8F00060D4C3 /* CategoryFormView.swift */; };
+		DF345963277EC8F00060D4C3 /* CategoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF345961277EC8F00060D4C3 /* CategoryFormView.swift */; };
 		DF3DD2C026F828390020C471 /* Tachidesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3DD2BF26F828390020C471 /* Tachidesk.swift */; };
 		DF3DD2C126F828390020C471 /* Tachidesk.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3DD2BF26F828390020C471 /* Tachidesk.swift */; };
 		DF4865F02776918E00FC397C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DF4865EF2776918E00FC397C /* CachedAsyncImage */; };
@@ -111,6 +116,8 @@
 		DF16FFEA26F54E72008BA976 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		DF16FFED26F56BE9008BA976 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		DF1F0C1A268D95920002B06E /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		DF34595D277E42440060D4C3 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		DF345961277EC8F00060D4C3 /* CategoryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFormView.swift; sourceTree = "<group>"; };
 		DF3DD2BF26F828390020C471 /* Tachidesk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tachidesk.swift; sourceTree = "<group>"; };
 		DF4B59262778565F0095D4C1 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		DF4B5929277858630095D4C1 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -146,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF34595C277E37D60060D4C3 /* Alamofire in Frameworks */,
 				DF4865F02776918E00FC397C /* CachedAsyncImage in Frameworks */,
 				DF8504D526FD695100669978 /* PartialSheet in Frameworks */,
 				DF4B5935277A3CDD0095D4C1 /* Refresh in Frameworks */,
@@ -215,6 +223,15 @@
 				DF01C9FB267F223100A565D3 /* macOS.entitlements */,
 			);
 			path = macOS;
+			sourceTree = "<group>";
+		};
+		DF345960277EC8CD0060D4C3 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				DF34595D277E42440060D4C3 /* CategoryView.swift */,
+				DF345961277EC8F00060D4C3 /* CategoryFormView.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		DF3DD2BE26F8281F0020C471 /* Network */ = {
@@ -338,6 +355,7 @@
 		DFF2413826FAB7FB00BB6D11 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DF345960277EC8CD0060D4C3 /* Category */,
 				DF4B592C277859DA0095D4C1 /* Tachidesk */,
 				DFAF2AE226806A8F0098D268 /* SettingsView.swift */,
 			);
@@ -365,6 +383,7 @@
 				DF8504D426FD695100669978 /* PartialSheet */,
 				DF4865EF2776918E00FC397C /* CachedAsyncImage */,
 				DF4B5934277A3CDD0095D4C1 /* Refresh */,
+				DF34595B277E37D60060D4C3 /* Alamofire */,
 			);
 			productName = "Koi (iOS)";
 			productReference = DF01C9F0267F223100A565D3 /* Koi.app */;
@@ -421,6 +440,7 @@
 				DF8504D326FD695100669978 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 				DF4865EE2776918E00FC397C /* XCRemoteSwiftPackageReference "SwiftUI-CachedAsyncImage" */,
 				DF4B5933277A3CDD0095D4C1 /* XCRemoteSwiftPackageReference "Refresh" */,
+				DF34595A277E37D60060D4C3 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = DF01C9F1267F223100A565D3 /* Products */;
 			projectDirPath = "";
@@ -466,6 +486,7 @@
 				DF16FFE826F53E6A008BA976 /* Genre.swift in Sources */,
 				DF3DD2C026F828390020C471 /* Tachidesk.swift in Sources */,
 				DFBD8AF226F6B1A400E55672 /* ChapterViewModel.swift in Sources */,
+				DF345962277EC8F00060D4C3 /* CategoryFormView.swift in Sources */,
 				DF6A673F26FFA8C7001A8FF1 /* CustomeCorner.swift in Sources */,
 				DFAF2AE9268070390098D268 /* Sidebar.swift in Sources */,
 				DF0B6F562680FF4C001FF9D3 /* MangaDescription.swift in Sources */,
@@ -496,6 +517,7 @@
 				DF0B6F532680FF14001FF9D3 /* DescriptionGradient.swift in Sources */,
 				DFAF2AE326806A8F0098D268 /* SettingsView.swift in Sources */,
 				DF16FFE526F53AB2008BA976 /* Category.swift in Sources */,
+				DF34595E277E42440060D4C3 /* CategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +529,7 @@
 				DFF543FA26F5BA300031B991 /* MangaViewModel.swift in Sources */,
 				DF0B6F572680FF4C001FF9D3 /* MangaDescription.swift in Sources */,
 				DF16FFE626F53AB2008BA976 /* Category.swift in Sources */,
+				DF345963277EC8F00060D4C3 /* CategoryFormView.swift in Sources */,
 				DF0B6F6026810084001FF9D3 /* ChapterListItem.swift in Sources */,
 				DF4B592F277859FE0095D4C1 /* TachideskAboutView.swift in Sources */,
 				DFF4656427011DEF00F3247C /* CloseButton.swift in Sources */,
@@ -532,6 +555,7 @@
 				DF16FFEF26F56BEA008BA976 /* CategoryViewModel.swift in Sources */,
 				DF9026AC2685A52100BA5E2F /* MangaDetailActions.swift in Sources */,
 				DF6A673A26FEF237001A8FF1 /* DetailView.swift in Sources */,
+				DF34595F277E42440060D4C3 /* CategoryView.swift in Sources */,
 				DFAF2AE126806A7D0098D268 /* ExploreView.swift in Sources */,
 				DFF465672701255600F3247C /* AlertItem.swift in Sources */,
 				DF1F0C1C268D95920002B06E /* Source.swift in Sources */,
@@ -784,6 +808,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DF34595A277E37D60060D4C3 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		DF4865EE2776918E00FC397C /* XCRemoteSwiftPackageReference "SwiftUI-CachedAsyncImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/SwiftUI-CachedAsyncImage";
@@ -819,6 +851,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DF34595B277E37D60060D4C3 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF34595A277E37D60060D4C3 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		DF4865EF2776918E00FC397C /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DF4865EE2776918E00FC397C /* XCRemoteSwiftPackageReference "SwiftUI-CachedAsyncImage" */;

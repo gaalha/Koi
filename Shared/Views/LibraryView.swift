@@ -19,8 +19,11 @@ struct LibraryView: View {
     @State var mangaListLoaded: Bool = false
     
     // Refresh plugin:
+    
     @State private var headerRefreshing: Bool = false
+    
     @State private var footerRefreshing: Bool = false
+    
     @State private var noMore: Bool = false
     
     var body: some View {
