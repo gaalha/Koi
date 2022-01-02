@@ -82,8 +82,6 @@
 		DFBD8AF026F6A69400E55672 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD8AEE26F6A69400E55672 /* Constants.swift */; };
 		DFBD8AF226F6B1A400E55672 /* ChapterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD8AF126F6B1A400E55672 /* ChapterViewModel.swift */; };
 		DFBD8AF326F6B1A400E55672 /* ChapterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD8AF126F6B1A400E55672 /* ChapterViewModel.swift */; };
-		DFCC72EF277C46DD00202997 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCC72EE277C46DD00202997 /* NetworkController.swift */; };
-		DFCC72F0277C46DD00202997 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCC72EE277C46DD00202997 /* NetworkController.swift */; };
 		DFDD0B2426D4502C005944A4 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDD0B2326D4502C005944A4 /* ReaderView.swift */; };
 		DFDD0B2626D4503C005944A4 /* ReaderControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDD0B2526D4503C005944A4 /* ReaderControllers.swift */; };
 		DFF2413326FAB72400BB6D11 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF2ADC26806A680098D268 /* LibraryView.swift */; };
@@ -139,7 +137,6 @@
 		DFB4D996268916FF005BDD8A /* MangaGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaGrid.swift; sourceTree = "<group>"; };
 		DFBD8AEE26F6A69400E55672 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DFBD8AF126F6B1A400E55672 /* ChapterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterViewModel.swift; sourceTree = "<group>"; };
-		DFCC72EE277C46DD00202997 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		DFDD0B2326D4502C005944A4 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		DFDD0B2526D4503C005944A4 /* ReaderControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderControllers.swift; sourceTree = "<group>"; };
 		DFF2413426FAB7E800BB6D11 /* TachideskOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TachideskOptionsView.swift; sourceTree = "<group>"; };
@@ -238,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				DF3DD2BF26F828390020C471 /* Tachidesk.swift */,
-				DFCC72EE277C46DD00202997 /* NetworkController.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -476,7 +472,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFCC72EF277C46DD00202997 /* NetworkController.swift in Sources */,
 				DFF2413526FAB7E800BB6D11 /* TachideskOptionsView.swift in Sources */,
 				DF4B592A277858630095D4C1 /* SettingViewModel.swift in Sources */,
 				DF1F0C1B268D95920002B06E /* Source.swift in Sources */,
@@ -534,7 +529,6 @@
 				DF4B592F277859FE0095D4C1 /* TachideskAboutView.swift in Sources */,
 				DFF4656427011DEF00F3247C /* CloseButton.swift in Sources */,
 				DF3DD2C126F828390020C471 /* Tachidesk.swift in Sources */,
-				DFCC72F0277C46DD00202997 /* NetworkController.swift in Sources */,
 				DFBD8AF326F6B1A400E55672 /* ChapterViewModel.swift in Sources */,
 				DF0B6F512680FEAB001FF9D3 /* MangaItem.swift in Sources */,
 				DF1214A22683D29F00421FCE /* DownloadButton.swift in Sources */,

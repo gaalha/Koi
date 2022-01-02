@@ -10,8 +10,6 @@ import Alamofire
 
 class CategoryViewModel: ObservableObject {
     
-    private let api = NetworkController()
-    
     @Published var category: Category? = nil
     
     @Published var categories: [Category] = []
