@@ -85,7 +85,7 @@ struct LibraryView: View {
                 Text(category.name)
             }
         }
-        .onChange(of: categorySelected) {tag in
+        .onChange(of: categorySelected) { tag in
             mangaListLoaded = false
             fetchOneCategory(categoryId: categorySelected)
         }
@@ -103,7 +103,7 @@ struct LibraryView: View {
             }
             
             self.categoriesLoaded = true
-            if categoryViewModel.category != nil {
+            if !categoryViewModel.categories.isEmpty {
                 fetchOneCategory(categoryId: categorySelected)
             } else {
                 self.headerRefreshing = false
@@ -114,15 +114,12 @@ struct LibraryView: View {
     
     func fetchOneCategory(categoryId: Int) {
         categoryViewModel.getOne(id: categoryId) { err in
-            if let err = err {
-                print(err)
-                self.mangaListLoaded = true
-                self.headerRefreshing = false
-                return
-            }
-            
             self.mangaListLoaded = true
             self.headerRefreshing = false
+            if let err = err {
+                print(err)
+                return
+            }
         }
     }
 }
