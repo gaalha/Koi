@@ -12,9 +12,11 @@ struct DetailView: View {
     
     var manga: Manga
     
-    @State var chapters: [Chapter] = []
+    @StateObject private var mangaViewModel = MangaViewModel()
     
     @State var chaptersLoaded: Bool = false
+    
+    @State var hasError: Bool = false
     
     @State var offset: CGFloat = 0
     
@@ -104,37 +106,6 @@ struct DetailView: View {
                 Text(manga.author ?? "")
                     .fontWeight(.bold)
                     .opacity(1 + getProgress())
-                
-//                HStack {
-//                    Button(action: {
-//                        print("Touched")
-//                    }, label: {
-//                        HStack {
-//                            Image(systemName: "plus")
-//                            Text("Library")
-//                        }
-//                    })
-//                        .buttonStyle(.bordered)
-//                        .background(.gray)
-//                        .foregroundColor(.black)
-//                        .cornerRadius(18)
-//                        .opacity(1 + getProgress())
-//
-//                    Button(action: {
-//                        print("Touched")
-//                    }, label: {
-//                        HStack {
-//                            Image(systemName: "minus")
-//                            Text("Library")
-//                        }
-//                    })
-//                        .buttonStyle(.bordered)
-//                        .background(.tint)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(18)
-//                        .opacity(1 + getProgress())
-//                }
-                
             }.padding(.leading)
 
             Spacer()
@@ -143,35 +114,55 @@ struct DetailView: View {
     
     var chapterListContent: some View {
         LazyVStack {
-            if self.chaptersLoaded && !self.chapters.isEmpty {
-                ForEach(chapters, id: \.id) { chapter in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(chapter.name)
-                            Text(chapter.scanlator ?? "")
-                        }
-                        Spacer()
-                        DownloadButton(chapter: chapter)
-                    }
-                    .fullScreenCover(isPresented: self.$showReader) {
-                        ReaderViewPaginated(chapter: chapter)
-                    }
-                    .onTapGesture {
-                        self.showReader = true
-                    }
-                    .padding(.leading)
-                    .padding(.trailing)
-                    Divider()
-                }
-            } else if self.chaptersLoaded && self.chapters.isEmpty {
-                Text("No chapters found 🥲")
-            } else if !chaptersLoaded {
+            if !chaptersLoaded {
                 ProgressView()
+            } else {
+                if hasError {
+                    Text("Something went wrong ... 🥲")
+                        .padding(.top)
+                    HStack {
+                        Button("Retry to load", action: {
+                            self.fetchChapterList(mangaId: self.manga.id)
+                        })
+                    }
+                    .buttonStyle(.bordered)
+                } else {
+                    if self.mangaViewModel.chapterList.isEmpty {
+                        Text("No chapters found 🥲")
+                        Button("Retry to load", action: {
+                            self.fetchChapterList(mangaId: self.manga.id)
+                        })
+                    } else {
+                        ForEach(self.mangaViewModel.chapterList, id: \.id) { chapter in
+                            self.chapterItem(chapter: chapter)
+                            .fullScreenCover(isPresented: self.$showReader) {
+                                ReaderViewPaginated(chapter: chapter)
+                            }
+                            .onTapGesture {
+                                self.showReader = true
+                            }
+                            .padding(.leading)
+                            .padding(.trailing)
+                            Divider()
+                        }
+                    }
+                }
             }
         }
         .modifier(OffsetModifier(offset: $offset))
         .padding(.top, 420)
         .padding(.top, -getSafeArea().top)
+    }
+    
+    func chapterItem(chapter: Chapter!) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(chapter.name)
+                Text(chapter.scanlator ?? "")
+            }
+            Spacer()
+            DownloadButton(chapter: chapter)
+        }
     }
     
     func getOffset() -> CGFloat {
@@ -197,17 +188,12 @@ struct DetailView: View {
     }
     
     func fetchChapterList(mangaId: Int) {
-        MangaViewModel().getChapters(mangaId: mangaId) { result in
-            switch result {
-            case let .success(chapters):
-                self.chaptersLoaded = true
-                if chapters != nil {
-                    self.chapters = chapters!
-                }
-                
-            case let .failure(error):
-                print(error)
-                self.chaptersLoaded = true
+        self.mangaViewModel.getChapters(mangaId: mangaId) { err in
+            self.chaptersLoaded = true
+            if let err = err {
+                print(err)
+                self.hasError = true
+                return
             }
         }
     }

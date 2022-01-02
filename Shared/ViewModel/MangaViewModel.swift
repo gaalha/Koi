@@ -5,64 +5,54 @@
 //  Created by Edgar Mejía on 18/9/21.
 //
 import Foundation
+import Alamofire
 
-class MangaViewModel {
+class MangaViewModel: ObservableObject {
     
-    func getOne(id: Int, completion: @escaping (Result<Manga?, Error>) -> ()) {
-        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(id)")
-        else { return completion(.success(nil)) }
+    @Published var manga: Manga? = nil
+    
+    @Published var chapterList: [Chapter] = []
+    
+    func getOne(id: Int, completion: @escaping (Error?) -> ()) {
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(id)"
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if data == nil { return completion(.success(nil)) }
-            let mangaDetail = try! JSONDecoder().decode(Manga.self, from: data!)
-            
-            DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(mangaDetail))
-                }
+        AF.request(url).responseDecodable(of: Manga.self) { response in
+            switch response.result {
+            case .success(_):
+                self.manga = response.value!
+                completion(nil)
+            case .failure(let error):
+                completion(error)
             }
         }
-        .resume()
     }
     
-    func getThunmnail(mangaId: Int, completion: @escaping (Result<Manga?, Error>) -> ()) {
-        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(mangaId)/thumbnail")
-        else { return completion(.success(nil)) }
+    func getThunmnail(mangaId: Int, completion: @escaping (Error?) -> ()) {
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(mangaId)/thumbnail"
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if data == nil { return completion(.success(nil)) }
-            let mangaDetail = try! JSONDecoder().decode(Manga.self, from: data!)
-            
-            DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(mangaDetail))
-                }
+        AF.request(url).responseDecodable(of: Manga.self) { response in
+            switch response.result {
+            case .success(_):
+                self.manga = response.value!
+                completion(nil)
+            case .failure(let error):
+                completion(error)
             }
         }
-        .resume()
     }
     
-    func getChapters(mangaId: Int, completion: @escaping (Result<[Chapter]?, Error>) -> ()) {
-        guard let url = URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(mangaId)/chapters?onlineFetch=false")
-        else { return completion(.success(nil)) }
+    func getChapters(mangaId: Int, completion: @escaping (Error?) -> ()) {
+        let url = "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(mangaId)/chapters?onlineFetch=false"
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if data == nil { return completion(.success(nil)) }
-            let chapterList = try! JSONDecoder().decode([Chapter].self, from: data!)
-            
-            DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(chapterList))
-                }
+        AF.request(url).responseDecodable(of: [Chapter].self) { response in
+            switch response.result {
+            case .success(_):
+                self.chapterList = response.value!
+                completion(nil)
+            case .failure(let error):
+                completion(error)
             }
         }
-        .resume()
     }
     
 }
