@@ -59,6 +59,13 @@
 		DF6A674026FFA8C7001A8FF1 /* CustomeCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A673E26FFA8C7001A8FF1 /* CustomeCorner.swift */; };
 		DF6A674226FFB05D001A8FF1 /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A674126FFB05D001A8FF1 /* OffsetModifier.swift */; };
 		DF6A674326FFB05D001A8FF1 /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6A674126FFB05D001A8FF1 /* OffsetModifier.swift */; };
+		DF7B1F062781A5BB00445874 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7B1F052781A5BB00445874 /* TagView.swift */; };
+		DF7B1F072781A5BB00445874 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7B1F052781A5BB00445874 /* TagView.swift */; };
+		DF7B1F092781AE4400445874 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7B1F082781AE4400445874 /* WebView.swift */; };
+		DF7B1F0A2781AE4400445874 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7B1F082781AE4400445874 /* WebView.swift */; };
+		DF7B1F0D2782776C00445874 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = DF7B1F0C2782776C00445874 /* WrappingHStack */; };
+		DF7B1F102782DE9900445874 /* ImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = DF7B1F0F2782DE9900445874 /* ImageViewer */; };
+		DF7B1F122782DE9900445874 /* ImageViewerRemote in Frameworks */ = {isa = PBXBuildFile; productRef = DF7B1F112782DE9900445874 /* ImageViewerRemote */; };
 		DF8504D526FD695100669978 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = DF8504D426FD695100669978 /* PartialSheet */; };
 		DF9026AB2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
 		DF9026AC2685A52100BA5E2F /* MangaDetailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */; };
@@ -125,6 +132,8 @@
 		DF6A673826FEF237001A8FF1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DF6A673E26FFA8C7001A8FF1 /* CustomeCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomeCorner.swift; sourceTree = "<group>"; };
 		DF6A674126FFB05D001A8FF1 /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
+		DF7B1F052781A5BB00445874 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		DF7B1F082781AE4400445874 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		DF9026AA2685A52100BA5E2F /* MangaDetailActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailActions.swift; sourceTree = "<group>"; };
 		DFAF2AD026805DF60098D268 /* Manga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manga.swift; sourceTree = "<group>"; };
 		DFAF2AD326805E100098D268 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
@@ -152,8 +161,11 @@
 			files = (
 				DF34595C277E37D60060D4C3 /* Alamofire in Frameworks */,
 				DF4865F02776918E00FC397C /* CachedAsyncImage in Frameworks */,
+				DF7B1F122782DE9900445874 /* ImageViewerRemote in Frameworks */,
+				DF7B1F102782DE9900445874 /* ImageViewer in Frameworks */,
 				DF8504D526FD695100669978 /* PartialSheet in Frameworks */,
 				DF4B5935277A3CDD0095D4C1 /* Refresh in Frameworks */,
+				DF7B1F0D2782776C00445874 /* WrappingHStack in Frameworks */,
 				DF5A1D2D26F1BA2700D425A8 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +293,7 @@
 				DFB4D996268916FF005BDD8A /* MangaGrid.swift */,
 				DFF4656227011DEF00F3247C /* CloseButton.swift */,
 				DFF465652701255600F3247C /* AlertItem.swift */,
+				DF7B1F052781A5BB00445874 /* TagView.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -327,6 +340,7 @@
 				DFBD8AEE26F6A69400E55672 /* Constants.swift */,
 				DF6A673E26FFA8C7001A8FF1 /* CustomeCorner.swift */,
 				DF6A674126FFB05D001A8FF1 /* OffsetModifier.swift */,
+				DF7B1F082781AE4400445874 /* WebView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -380,6 +394,9 @@
 				DF4865EF2776918E00FC397C /* CachedAsyncImage */,
 				DF4B5934277A3CDD0095D4C1 /* Refresh */,
 				DF34595B277E37D60060D4C3 /* Alamofire */,
+				DF7B1F0C2782776C00445874 /* WrappingHStack */,
+				DF7B1F0F2782DE9900445874 /* ImageViewer */,
+				DF7B1F112782DE9900445874 /* ImageViewerRemote */,
 			);
 			productName = "Koi (iOS)";
 			productReference = DF01C9F0267F223100A565D3 /* Koi.app */;
@@ -437,6 +454,8 @@
 				DF4865EE2776918E00FC397C /* XCRemoteSwiftPackageReference "SwiftUI-CachedAsyncImage" */,
 				DF4B5933277A3CDD0095D4C1 /* XCRemoteSwiftPackageReference "Refresh" */,
 				DF34595A277E37D60060D4C3 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				DF7B1F0B2782776B00445874 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				DF7B1F0E2782DE9900445874 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 			);
 			productRefGroup = DF01C9F1267F223100A565D3 /* Products */;
 			projectDirPath = "";
@@ -483,6 +502,7 @@
 				DFBD8AF226F6B1A400E55672 /* ChapterViewModel.swift in Sources */,
 				DF345962277EC8F00060D4C3 /* CategoryFormView.swift in Sources */,
 				DF6A673F26FFA8C7001A8FF1 /* CustomeCorner.swift in Sources */,
+				DF7B1F062781A5BB00445874 /* TagView.swift in Sources */,
 				DFAF2AE9268070390098D268 /* Sidebar.swift in Sources */,
 				DF0B6F562680FF4C001FF9D3 /* MangaDescription.swift in Sources */,
 				DFF4656327011DEF00F3247C /* CloseButton.swift in Sources */,
@@ -495,6 +515,7 @@
 				DF4B592E277859FE0095D4C1 /* TachideskAboutView.swift in Sources */,
 				DFAF2AD126805DF60098D268 /* Manga.swift in Sources */,
 				DF01C9FE267F223100A565D3 /* ContentView.swift in Sources */,
+				DF7B1F092781AE4400445874 /* WebView.swift in Sources */,
 				DF6A673126FE33A3001A8FF1 /* ReaderViewPaginated.swift in Sources */,
 				DF01C9FC267F223100A565D3 /* KoiApp.swift in Sources */,
 				DFAF2AD426805E100098D268 /* Chapter.swift in Sources */,
@@ -535,10 +556,12 @@
 				DFF2413626FAB7E800BB6D11 /* TachideskOptionsView.swift in Sources */,
 				DFB4D998268916FF005BDD8A /* MangaGrid.swift in Sources */,
 				DFAF2AE726806C1E0098D268 /* HistoryView.swift in Sources */,
+				DF7B1F0A2781AE4400445874 /* WebView.swift in Sources */,
 				DF4B59282778565F0095D4C1 /* About.swift in Sources */,
 				DFBD8AF026F6A69400E55672 /* Constants.swift in Sources */,
 				DF6A673726FEB938001A8FF1 /* ZoomableScrollView.swift in Sources */,
 				DFAF2AD226805DF60098D268 /* Manga.swift in Sources */,
+				DF7B1F072781A5BB00445874 /* TagView.swift in Sources */,
 				DF6A674326FFB05D001A8FF1 /* OffsetModifier.swift in Sources */,
 				DF16FFEC26F54E72008BA976 /* Extension.swift in Sources */,
 				DF6A674026FFA8C7001A8FF1 /* CustomeCorner.swift in Sources */,
@@ -834,6 +857,22 @@
 				minimumVersion = 0.1.3;
 			};
 		};
+		DF7B1F0B2782776B00445874 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		DF7B1F0E2782DE9900445874 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Jake-Short/swiftui-image-viewer.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		DF8504D326FD695100669978 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet.git";
@@ -869,6 +908,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DF5A1D2B26F1BA2700D425A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		DF7B1F0C2782776C00445874 /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF7B1F0B2782776B00445874 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+		DF7B1F0F2782DE9900445874 /* ImageViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF7B1F0E2782DE9900445874 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			productName = ImageViewer;
+		};
+		DF7B1F112782DE9900445874 /* ImageViewerRemote */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF7B1F0E2782DE9900445874 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			productName = ImageViewerRemote;
 		};
 		DF8504D426FD695100669978 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;

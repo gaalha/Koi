@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CachedAsyncImage
+import ImageViewerRemote
 
 struct DetailView: View {
     
@@ -22,55 +23,203 @@ struct DetailView: View {
     
     @State var showReader = false
     
+    @State var uiTabarController: UITabBarController?
+    
+    @State var showThumbnailViewer: Bool = false
+    
+    @State var imgURL: String = ""
+    
     @Environment(\.dismiss) var dismiss
+    
+    @Environment(\.openURL) var openURL
     
     var body: some View {
         content
-            .overlay(closeButton, alignment: .topTrailing)
-            .ignoresSafeArea(.container, edges: .top)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(ImageViewerRemote(imageURL: self.$imgURL, viewerShown: self.$showThumbnailViewer))
+            .ignoresSafeArea(.container, edges: [.leading, .trailing])
+//            .navigationBarHidden(true)
+            .navigationBarItems(trailing: {
+                Menu {
+                    Button(action: {
+                        print("Add to library")
+                    }) {
+                        Label("Add to library", systemImage: "book")
+                    }
+                    
+                    Button(action: {
+                        print("Download")
+                    }) {
+                        Label("Download", systemImage: "arrow.down.circle")
+                    }
+                    
+                    Button(action: {
+                        self.shareURL(url: manga.realUrl!)
+                    }) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                    
+                    Button(action: {
+                        self.openURL(URL(string: manga.realUrl!)!)
+                    }) {
+                        Label("Open URL", systemImage: "safari")
+                    }
+                    
+                    Button(action: {
+                        self.copyURL(url: manga.realUrl!)
+                    }) {
+                        Label("Copy URL", systemImage: "doc.on.clipboard")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }())
+            .introspectTabBarController { (UITabBarController) in
+                UITabBarController.tabBar.isHidden = true
+                uiTabarController = UITabBarController
+            }
             .onAppear {
+                UITableView.appearance().separatorColor = .clear
                 self.fetchChapterList(mangaId: self.manga.id)
+            }
+            .onDisappear {
+                UITableView.appearance().separatorColor = .separator
+                uiTabarController?.tabBar.isHidden = false
             }
     }
     
     var content: some View {
-        ZStack(alignment: .top) {
-            ZStack {
-                // Blur bg.
-                thumbnail
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 300, alignment: .bottom)
-                    .clipShape(CustomCorner(corners: [.bottomLeft, .bottomRight], radius: getCornerRadius()))
-                    .opacity(1 + getProgress())
-                
-                CustomCorner(corners: [.bottomLeft, .bottomRight], radius: getCornerRadius())
-                    .fill(.ultraThinMaterial)
-                
-                mangaDescription
-                .padding(15)
-                .padding(.bottom, 30)
-                .offset(y: calculateTitleAndThumbnailPosition() * -90)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+        List {
+            Section {
+                detailSection
             }
-            .frame(height: 350)
-            .offset(y: getOffset())
-            .zIndex(1)
             
-            ScrollView {
-                chapterListContent
+            Text(self.getChaptersCount())
+                .font(.caption)
+                .foregroundColor(.gray)
+            
+            Section {
+                if !chaptersLoaded {
+                    ProgressView()
+                } else {
+                    if hasError {
+                        Text("Something went wrong ... 🥲")
+                            .padding(.top)
+                        HStack {
+                            Button("Retry to load", action: {
+                                self.fetchChapterList(mangaId: self.manga.id)
+                            })
+                        }
+                        .buttonStyle(.bordered)
+                    } else {
+                        if self.mangaViewModel.chapterList.isEmpty {
+                            Text("No chapters found 🥲")
+                            Button("Retry to load", action: {
+                                self.fetchChapterList(mangaId: self.manga.id)
+                            })
+                        } else {
+                            ForEach(self.mangaViewModel.chapterList, id: \.id) { chapter in
+                                self.chapterItem(chapter: chapter)
+                                    .contextMenu {
+                                        Button(action: { self.copyURL(url: chapter.url!) }) { Label("Copy URL", systemImage: "doc.on.clipboard") }
+                                        Button(action: { self.openURL(URL(string: chapter.url!)!) }) { Label("Open URL", systemImage: "safari") }
+                                        
+                                        if chapter.downloaded {
+                                            Button(action: { }) { Label("Remove Download", systemImage: "checkmark.circle.fill") }
+                                        } else {
+                                            Button(action: { }) { Label("Download", systemImage: "arrow.down.circle") }
+                                        }
+                                        
+                                        if chapter.bookmarked {
+                                            Button(action: { }) { Label("Remove Bookmark", systemImage: "bookmark.slash") }
+                                        } else {
+                                            Button(action: { }) { Label("Add Bookmark", systemImage: "bookmark.fill") }
+                                        }
+                                        
+                                        if chapter.read {
+                                            Button(action: { }) { Label("Mark as unread", systemImage: "eye.slash") }
+                                        } else {
+                                            Button(action: { }) { Label("Mark as read", systemImage: "eye") }
+                                        }
+                                    }
+                                    .onTapGesture {
+                                        self.showReader = true
+                                    }
+                                    .fullScreenCover(isPresented: self.$showReader) {
+                                        ReaderViewPaginated(chapter: chapter)
+                                    }
+                                    .swipeActions(edge: .leading) {
+                                        if chapter.bookmarked {
+                                            Button(action: { print("Remove Bookmark") }, label: { Image(systemName: "bookmark.slash") }).tint(.accentColor)
+                                        } else {
+                                            Button(action: { print("Bookmark") }, label: { Image(systemName: "bookmark") }).tint(.accentColor)
+                                        }
+                                    }
+                                    .swipeActions(edge: .trailing) {
+                                        if chapter.read {
+                                            Button(action: { print("Remove read") }, label: { Image(systemName: "eye.slash") }).tint(.blue)
+                                        } else {
+                                            Button(action: { print("As read") }, label: { Image(systemName: "eye") }).tint(.blue)
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .refreshable {
+            self.fetchChapterList(mangaId: self.manga.id)
+        }
+        .listStyle(PlainListStyle())
+    }
+    
+    var detailSection: some View {
+        VStack(alignment: .leading) {
+            HStack (alignment: .top) {
+                thumbnail
+                    .onTapGesture {
+                        self.imgURL = self.getThumbnailURL()
+                        self.showThumbnailViewer.toggle()
+                    }
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100)
+                
+                VStack(alignment: .leading) {
+                    Text(manga.title)
+                        .fontWeight(.bold)
+                        .lineLimit(3)
+                    Text(manga.author ?? "No author")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text(manga.source?.name ?? "No source name")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    
+                    Text(manga.description ?? "No description")
+                        .font(.footnote)
+                        .lineLimit(6)
+                        .padding(.top)
+                }
+                .padding([.leading, .trailing])
+            }
+            
+            if self.manga.genre != nil && !self.manga.genre!.isEmpty {
+                ScrollView (.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(self.manga.genre!, id: \.self) { genre in
+                            TagView(tag: genre)
+                        }
+                    }
+                    .fixedSize(horizontal: true, vertical: true)
+                }
             }
         }
     }
     
-    var closeButton: some View {
-        Button(action: {
-            self.dismiss()
-        }, label: {CloseButton()}).padding(30)
-    }
-    
     var thumbnail: some View {
         CachedAsyncImage(
-            url: URL(string: "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail")!
+            url: URL(string: self.getThumbnailURL())!
         ) { phase in
             switch phase {
             case .empty:
@@ -86,105 +235,38 @@ struct DetailView: View {
         }
     }
     
-    var mangaDescription: some View {
-        HStack(alignment: .top) {
-            thumbnail
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 150)
-                .cornerRadius(5)
-                .scaleEffect(1 + calculateTitleAndThumbnailPosition() * 1.5, anchor: .bottomLeading)
-                .offset(y: calculateTitleAndThumbnailPosition())
-
-            VStack(alignment: .leading) {
-                Text(manga.title)
-                    .fontWeight(.bold)
-                    .lineLimit(3)
-                    .offset(x: calculateTitleAndThumbnailPosition() * 150, y: calculateTitleAndThumbnailPosition() * -270)
-                Text(manga.description ?? "")
-                    .lineLimit(4)
-                    .opacity(1 + getProgress())
-                Text(manga.author ?? "")
-                    .fontWeight(.bold)
-                    .opacity(1 + getProgress())
-            }.padding(.leading)
-
-            Spacer()
-        }
-    }
-    
-    var chapterListContent: some View {
-        LazyVStack {
-            if !chaptersLoaded {
-                ProgressView()
-            } else {
-                if hasError {
-                    Text("Something went wrong ... 🥲")
-                        .padding(.top)
-                    HStack {
-                        Button("Retry to load", action: {
-                            self.fetchChapterList(mangaId: self.manga.id)
-                        })
-                    }
-                    .buttonStyle(.bordered)
-                } else {
-                    if self.mangaViewModel.chapterList.isEmpty {
-                        Text("No chapters found 🥲")
-                        Button("Retry to load", action: {
-                            self.fetchChapterList(mangaId: self.manga.id)
-                        })
-                    } else {
-                        ForEach(self.mangaViewModel.chapterList, id: \.id) { chapter in
-                            self.chapterItem(chapter: chapter)
-                            .fullScreenCover(isPresented: self.$showReader) {
-                                ReaderViewPaginated(chapter: chapter)
-                            }
-                            .onTapGesture {
-                                self.showReader = true
-                            }
-                            .padding(.leading)
-                            .padding(.trailing)
-                            Divider()
-                        }
-                    }
-                }
-            }
-        }
-        .modifier(OffsetModifier(offset: $offset))
-        .padding(.top, 420)
-        .padding(.top, -getSafeArea().top)
-    }
-    
     func chapterItem(chapter: Chapter!) -> some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(chapter.name)
+                HStack {
+                    if chapter.bookmarked {
+                        Image(systemName: "bookmark.fill")
+                            .font(.footnote)
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    if chapter.read {
+                        Text(chapter.name)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
+                    } else {
+                        Text(chapter.name)
+                            .lineLimit(1)
+                    }
+                }
+                
                 Text(chapter.scanlator ?? "")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
             }
             Spacer()
-            DownloadButton(chapter: chapter)
+            
+            if chapter.downloaded {
+                Button(action: { print("Remove download") }, label: { Image(systemName: "checkmark.circle.fill") })
+            } else {
+                DownloadButton(chapter: chapter)
+            }
         }
-    }
-    
-    func getOffset() -> CGFloat {
-        let checkSize = -offset < (280-getSafeArea().top) ? offset : -(280-getSafeArea().top)
-        return offset < 0 ? checkSize : 0
-    }
-    
-    func getProgress() -> CGFloat {
-        let topHeight = (280-getSafeArea().top)
-        let progress = getOffset() / topHeight
-        return progress
-    }
-    
-    func getCornerRadius() -> CGFloat {
-        let radius = getProgress() * 45
-        
-        return 45 + radius
-    }
-    
-    func calculateTitleAndThumbnailPosition() -> CGFloat  {
-        let progress = -getProgress() < 0.4 ? getProgress() : -0.4
-        return progress
     }
     
     func fetchChapterList(mangaId: Int) {
@@ -197,6 +279,38 @@ struct DetailView: View {
             }
         }
     }
+    
+    func shareURL(url: String) {
+        guard let data = URL(string: url) else { return }
+        let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+        
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        
+        DispatchQueue.main.async() {
+            window?.rootViewController?.present(av, animated: true, completion: nil)
+        }
+    }
+    
+    func copyURL(url: String) {
+        UIPasteboard.general.string = url
+    }
+    
+    func getChaptersCount() -> String {
+        if self.mangaViewModel.chapterList.isEmpty {
+            return ""
+        } else if self.mangaViewModel.chapterList.count == 1 {
+            return "\(self.mangaViewModel.chapterList.count) chapter".uppercased()
+        } else {
+            return "\(self.mangaViewModel.chapterList.count) chapters".uppercased()
+        }
+    }
+    
+    func getThumbnailURL() -> String {
+        return "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(self.manga.id)/thumbnail"
+    }
+    
 }
 
 //struct DetailView_Previews: PreviewProvider {
@@ -207,22 +321,3 @@ struct DetailView: View {
 //    }
 //}
 
-extension View {
-    
-    func getScreenBound() -> CGRect {
-        return UIScreen.main.bounds
-    }
-    
-    func getSafeArea() -> UIEdgeInsets {
-        let null = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        else { return null }
-        
-        guard let safeArea = screen.windows.first?.safeAreaInsets
-        else { return null }
-        
-        return safeArea
-    }
-    
-}

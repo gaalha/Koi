@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import Refresh
 
 struct LibraryView: View {
@@ -18,14 +19,6 @@ struct LibraryView: View {
     
     @State var mangaListLoaded: Bool = false
     
-    // Refresh plugin:
-    
-    @State private var headerRefreshing: Bool = false
-    
-    @State private var footerRefreshing: Bool = false
-    
-    @State private var noMore: Bool = false
-    
     var body: some View {
         content
             .navigationTitle("Library")
@@ -36,15 +29,6 @@ struct LibraryView: View {
     
     var content: some View {
         ScrollView {
-            RefreshHeader(refreshing: $headerRefreshing, action: fetchCategories) { progress in
-                if self.headerRefreshing {
-//                    Text("refreshing...")
-                    ProgressView()
-                } else {
-                    Text("Pull to refresh")
-                }
-            }
-            
             if !categoriesLoaded && !mangaListLoaded {
                 VStack(alignment: .leading) {
                     ProgressView()
@@ -76,7 +60,14 @@ struct LibraryView: View {
                 }
             }
         }
-        .enableRefresh()
+//        .introspectScrollView { scrollView in
+//            self.fetchCategories()
+//            scrollView.refreshControl = UIRefreshControl()
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                scrollView.refreshControl?.endRefreshing()
+//            }
+//        }
     }
     
     var categoriesSection: some View {
@@ -93,12 +84,15 @@ struct LibraryView: View {
         .padding()
     }
     
+    func refresh(sender: AnyObject) {
+        self.fetchCategories()
+    }
+    
     func fetchCategories() {
         categoryViewModel.getAll() { err in
             if let err = err {
                 print(err)
                 self.categoriesLoaded = true
-                self.headerRefreshing = false
                 return
             }
             
@@ -106,7 +100,6 @@ struct LibraryView: View {
             if !categoryViewModel.categories.isEmpty {
                 fetchOneCategory(categoryId: categorySelected)
             } else {
-                self.headerRefreshing = false
                 self.mangaListLoaded = true
             }
         }
@@ -115,7 +108,6 @@ struct LibraryView: View {
     func fetchOneCategory(categoryId: Int) {
         categoryViewModel.getOne(id: categoryId) { err in
             self.mangaListLoaded = true
-            self.headerRefreshing = false
             if let err = err {
                 print(err)
                 return

@@ -47,22 +47,8 @@ struct MangaGrid: View {
     func getGridItem(manga: Manga) -> some View {
         VStack {
             #if os(iOS)
-            if horizontalSizeClass == .compact {
+            NavigationLink(destination: DetailView(manga: manga)) {
                 getMangaItem(manga: manga)
-                    .onTapGesture {
-                        self.selectedManga = manga
-                    }
-                    .fullScreenCover(item: $selectedManga) { presentedItem in
-                        DetailView(manga: presentedItem)
-                    }
-            } else {
-                getMangaItem(manga: manga)
-                    .onTapGesture {
-                        self.selectedManga = manga
-                    }
-                    .sheet(item: $selectedManga) { presentedItem in
-                        DetailView(manga: presentedItem)
-                    }
             }
             #else
             // macOS ...
