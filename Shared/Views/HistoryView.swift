@@ -8,29 +8,54 @@
 import SwiftUI
 
 struct HistoryView: View {
-    
-    let url = URL(string: "https://image.tmdb.org/t/p/original/pThyQovXQrw2m0s9x82twj48Jq4.jpg")!
 
     var body: some View {
-        AsyncImage(
-            url: url,
-            transaction: Transaction(animation: .easeInOut)
-        ) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizable()
-                    .transition(.scale(scale: 0.1, anchor: .center))
-            case .failure:
-                Image(systemName: "xmark.octagon.fill")
-            @unknown default:
-                EmptyView()
-            }
+        HStack {
+            Button(action: {
+                print("Touched")
+            }, label: {
+                HStack {
+                    Image(systemName: "plus")
+                    Text("Library")
+                }
+            })
+                .buttonStyle(.bordered)
+                .background(.clear)
+                .foregroundColor(.black)
+                .cornerRadius(18)
+            
+            Button(action: {
+                print("Touched")
+            }, label: {
+                HStack {
+                    Image(systemName: "minus")
+                    Text("Library")
+                }
+            })
+                .buttonStyle(.bordered)
+                .background(.tint)
+                .foregroundColor(.white)
+                .cornerRadius(18)
         }
-        .frame(width: 150, height: 250)
-        .background(Color.gray)
+//        AsyncImage(
+//            url: url,
+//            transaction: Transaction(animation: .easeInOut)
+//        ) { phase in
+//            switch phase {
+//            case .empty:
+//                ProgressView()
+//            case .success(let image):
+//                image
+//                    .resizable()
+//                    .transition(.scale(scale: 0.1, anchor: .center))
+//            case .failure:
+//                Image(systemName: "xmark.octagon.fill")
+//            @unknown default:
+//                EmptyView()
+//            }
+//        }
+//        .frame(width: 150, height: 250)
+//        .background(Color.gray)
     }
 }
 

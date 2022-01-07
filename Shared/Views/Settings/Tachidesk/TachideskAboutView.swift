@@ -38,14 +38,14 @@ struct TachideskAboutView: View {
                             HStack {
                                 Text("Server")
                                 Spacer()
-                                Text("\(self.about.name ?? "") \(self.about.buildType)")
+                                Text("\(about.name ?? "") \(about.buildType)")
                                     .foregroundColor(.gray)
                             }
                             
                             HStack {
                                 Text("Server version")
                                 Spacer()
-                                Text("\(self.about.version)")
+                                Text("\(about.version)")
                                     .foregroundColor(.gray)
                             }
                             

@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
-import Refresh
 
 struct LibraryView: View {
     
@@ -85,7 +83,7 @@ struct LibraryView: View {
     }
     
     func refresh(sender: AnyObject) {
-        self.fetchCategories()
+        fetchCategories()
     }
     
     func fetchCategories() {

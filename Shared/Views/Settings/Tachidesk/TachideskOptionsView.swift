@@ -32,11 +32,11 @@ struct TachideskOptionsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    self.isTestingConnection = true
-                    self.testConnection()
+                    isTestingConnection = true
+                    testConnection()
                 }) {
                     Text("Test")
-                }.disabled(self.isTestingConnection)
+                }.disabled(isTestingConnection)
             }
         }
         #else
@@ -73,7 +73,7 @@ struct TachideskOptionsView: View {
     }
     
     var alertContent: some View {
-        AlertItem(icon: self.testResultIcon, message: self.testResultMessage)
+        AlertItem(icon: testResultIcon, message: testResultMessage)
     }
     
     func hideTestAlert() {
@@ -83,7 +83,7 @@ struct TachideskOptionsView: View {
     }
     
     func testConnection() {
-        viewModel.getAll() { err in
+        viewModel.getAll { err in
             if err != nil {
                 setErrorResult()
                 return
@@ -98,7 +98,7 @@ struct TachideskOptionsView: View {
         self.testResultIcon = "checkmark.icloud"
         self.testResultMessage = "Success conected to Tachidesk!"
         self.showTestAlert = true
-        self.hideTestAlert()
+        hideTestAlert()
     }
     
     func setErrorResult() {
@@ -106,7 +106,7 @@ struct TachideskOptionsView: View {
         self.testResultIcon = "xmark.icloud"
         self.testResultMessage = "Failed to conect to Tachidesk, try with other HOST or/and PORT."
         self.showTestAlert = true
-        self.hideTestAlert()
+        hideTestAlert()
     }
 }
 

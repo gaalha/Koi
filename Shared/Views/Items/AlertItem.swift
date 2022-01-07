@@ -15,8 +15,8 @@ struct AlertItem: View {
     
     var body: some View {
         VStack {
-            Image(systemName: self.icon)
-            Text(self.message).padding(.top)
+            Image(systemName: icon)
+            Text(message).padding(.top)
         }
         .padding()
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16.0))

@@ -31,7 +31,7 @@ struct ReaderViewPaginated: View {
             .edgesIgnoringSafeArea(.all)
             .navigationBarHidden(true)
             .onAppear {
-                self.loadChapterDetail()
+                loadChapterDetail()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.showOrientationIndicator.toggle()
@@ -46,9 +46,9 @@ struct ReaderViewPaginated: View {
                 .ignoresSafeArea()
                 .overlay(closeButton, alignment: .topTrailing)
             
-            if !self.chapterDetailLoaded {
+            if !chapterDetailLoaded {
                 loadingPages
-            } else if self.chapterDetailLoaded && self.chapterDetail != nil && self.numberOfPages>0 {
+            } else if chapterDetailLoaded && chapterDetail != nil && numberOfPages>0 {
                 readerContent
             } else {
                 noPagesContent
@@ -73,9 +73,9 @@ struct ReaderViewPaginated: View {
     
     var readerContent: some View {
         TabView(selection: $currentPage) {
-            ForEach(0..<self.numberOfPages, id: \.self) { page in
+            ForEach(0..<numberOfPages, id: \.self) { page in
                 if currentPage == page {
-                    loadImage(url: getPageUrl(chapter: self.chapterDetail!, page: page))
+                    loadImage(url: getPageUrl(chapter: chapterDetail!, page: page))
                 } else {
                     ProgressView()
                 }
@@ -91,7 +91,7 @@ struct ReaderViewPaginated: View {
     }
     
     var pageNumberIndicator: some View {
-        Text("\(self.currentPage + 1)/\(self.numberOfPages)")
+        Text("\(currentPage + 1)/\(numberOfPages)")
             .font(.system(size: 15, weight: .bold))
             .shadow(color: .black, radius: 0.5)
             .padding(.bottom, 30)
@@ -100,7 +100,7 @@ struct ReaderViewPaginated: View {
     
     var closeButton: some View {
         Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
+            presentationMode.wrappedValue.dismiss()
         }, label: {CloseButton()}).padding(30)
     }
     
@@ -136,10 +136,10 @@ struct ReaderViewPaginated: View {
     }
     
     private func loadChapterDetail() {
-        if self.chapter.pageCount! == -1 {
+        if chapter.pageCount! == -1 {
             ChapterViewModel().getDetail(
-                mangaId: self.chapter.mangaId,
-                chapterIndex: self.chapter.index!,
+                mangaId: chapter.mangaId,
+                chapterIndex: chapter.index!,
                 completion: { result in
                 switch result {
                 case let .success(chapter):
@@ -155,9 +155,9 @@ struct ReaderViewPaginated: View {
                 }
             })
         } else {
-            self.chapterDetail = self.chapter
+            self.chapterDetail = chapter
             self.chapterDetailLoaded = true
-            self.numberOfPages =  self.chapter.pageCount ?? 0
+            self.numberOfPages =  chapter.pageCount ?? 0
         }
     }
     

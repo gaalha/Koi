@@ -20,10 +20,6 @@ struct CategoryView: View {
     
     @State var `default`: Bool = false
     
-//    @State var isAding = false
-//
-//    @State var newCategory: String = ""
-    
     @State private var showForm = false
     
     var body: some View {

@@ -20,12 +20,12 @@ struct MangaGrid: View {
     #endif
     
     var body: some View {
-        if !self.mangaList.isEmpty {
+        if !mangaList.isEmpty {
             LazyVGrid(
                 columns: [GridItem(.adaptive(minimum: 100, maximum: 110), spacing: 10)],
                 spacing: 5
             ) {
-                ForEach(self.mangaList) { manga in
+                ForEach(mangaList) { manga in
                     if !hideNsfw {
                         self.getGridItem(manga: manga)
                     } else if hideNsfw {
@@ -36,7 +36,7 @@ struct MangaGrid: View {
                     }
                 }
             }
-            Text("Total: \(self.mangaList.count)")
+            Text("Total: \(mangaList.count)")
                 .font(.footnote)
                 .foregroundColor(.gray)
         } else {

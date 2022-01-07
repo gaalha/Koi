@@ -8,6 +8,7 @@
 import SwiftUI
 import CachedAsyncImage
 import ImageViewerRemote
+import Introspect
 
 struct DetailView: View {
     
@@ -23,7 +24,7 @@ struct DetailView: View {
     
     @State var showReader = false
     
-    @State var uiTabarController: UITabBarController?
+    @State var uiTabBarController: UITabBarController?
     
     @State var showThumbnailViewer: Bool = false
     
@@ -38,7 +39,6 @@ struct DetailView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(ImageViewerRemote(imageURL: self.$imgURL, viewerShown: self.$showThumbnailViewer))
             .ignoresSafeArea(.container, edges: [.leading, .trailing])
-//            .navigationBarHidden(true)
             .navigationBarItems(trailing: {
                 Menu {
                     Button(action: {
@@ -54,7 +54,7 @@ struct DetailView: View {
                     }
                     
                     Button(action: {
-                        self.shareURL(url: manga.realUrl!)
+                        shareURL(url: manga.realUrl!)
                     }) {
                         Label("Share", systemImage: "square.and.arrow.up")
                     }
@@ -66,7 +66,7 @@ struct DetailView: View {
                     }
                     
                     Button(action: {
-                        self.copyURL(url: manga.realUrl!)
+                        copyURL(url: manga.realUrl!)
                     }) {
                         Label("Copy URL", systemImage: "doc.on.clipboard")
                     }
@@ -76,15 +76,15 @@ struct DetailView: View {
             }())
             .introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = true
-                uiTabarController = UITabBarController
+                uiTabBarController = UITabBarController
             }
             .onAppear {
                 UITableView.appearance().separatorColor = .clear
-                self.fetchChapterList(mangaId: self.manga.id)
+                fetchChapterList(mangaId: manga.id)
             }
             .onDisappear {
                 UITableView.appearance().separatorColor = .separator
-                uiTabarController?.tabBar.isHidden = false
+                uiTabBarController?.tabBar.isHidden = false
             }
     }
     
@@ -94,7 +94,7 @@ struct DetailView: View {
                 detailSection
             }
             
-            Text(self.getChaptersCount())
+            Text(getChaptersCount())
                 .font(.caption)
                 .foregroundColor(.gray)
             
@@ -107,18 +107,18 @@ struct DetailView: View {
                             .padding(.top)
                         HStack {
                             Button("Retry to load", action: {
-                                self.fetchChapterList(mangaId: self.manga.id)
+                                fetchChapterList(mangaId: manga.id)
                             })
                         }
                         .buttonStyle(.bordered)
                     } else {
-                        if self.mangaViewModel.chapterList.isEmpty {
+                        if mangaViewModel.chapterList.isEmpty {
                             Text("No chapters found 🥲")
                             Button("Retry to load", action: {
-                                self.fetchChapterList(mangaId: self.manga.id)
+                                fetchChapterList(mangaId: manga.id)
                             })
                         } else {
-                            ForEach(self.mangaViewModel.chapterList, id: \.id) { chapter in
+                            ForEach(mangaViewModel.chapterList, id: \.id) { chapter in
                                 self.chapterItem(chapter: chapter)
                                     .contextMenu {
                                         Button(action: { self.copyURL(url: chapter.url!) }) { Label("Copy URL", systemImage: "doc.on.clipboard") }
@@ -169,7 +169,7 @@ struct DetailView: View {
             }
         }
         .refreshable {
-            self.fetchChapterList(mangaId: self.manga.id)
+            fetchChapterList(mangaId: manga.id)
         }
         .listStyle(PlainListStyle())
     }
@@ -179,7 +179,7 @@ struct DetailView: View {
             HStack (alignment: .top) {
                 thumbnail
                     .onTapGesture {
-                        self.imgURL = self.getThumbnailURL()
+                        self.imgURL = getThumbnailURL()
                         self.showThumbnailViewer.toggle()
                     }
                     .aspectRatio(contentMode: .fit)
@@ -204,10 +204,10 @@ struct DetailView: View {
                 .padding([.leading, .trailing])
             }
             
-            if self.manga.genre != nil && !self.manga.genre!.isEmpty {
+            if manga.genre != nil && !manga.genre!.isEmpty {
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(self.manga.genre!, id: \.self) { genre in
+                        ForEach(manga.genre!, id: \.self) { genre in
                             TagView(tag: genre)
                         }
                     }
@@ -219,7 +219,7 @@ struct DetailView: View {
     
     var thumbnail: some View {
         CachedAsyncImage(
-            url: URL(string: self.getThumbnailURL())!
+            url: URL(string: getThumbnailURL())!
         ) { phase in
             switch phase {
             case .empty:
@@ -270,7 +270,7 @@ struct DetailView: View {
     }
     
     func fetchChapterList(mangaId: Int) {
-        self.mangaViewModel.getChapters(mangaId: mangaId) { err in
+        mangaViewModel.getChapters(mangaId: mangaId) { err in
             self.chaptersLoaded = true
             if let err = err {
                 print(err)
@@ -288,7 +288,7 @@ struct DetailView: View {
         let windowScene = scenes.first as? UIWindowScene
         let window = windowScene?.windows.first
         
-        DispatchQueue.main.async() {
+        DispatchQueue.main.async {
             window?.rootViewController?.present(av, animated: true, completion: nil)
         }
     }
@@ -298,17 +298,17 @@ struct DetailView: View {
     }
     
     func getChaptersCount() -> String {
-        if self.mangaViewModel.chapterList.isEmpty {
+        if mangaViewModel.chapterList.isEmpty {
             return ""
-        } else if self.mangaViewModel.chapterList.count == 1 {
-            return "\(self.mangaViewModel.chapterList.count) chapter".uppercased()
+        } else if mangaViewModel.chapterList.count == 1 {
+            return "\(mangaViewModel.chapterList.count) chapter".uppercased()
         } else {
-            return "\(self.mangaViewModel.chapterList.count) chapters".uppercased()
+            return "\(mangaViewModel.chapterList.count) chapters".uppercased()
         }
     }
     
     func getThumbnailURL() -> String {
-        return "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(self.manga.id)/thumbnail"
+        "\(Tachidesk().getFullHost())\(Constants.API.TACHIDESK.MANGA)/\(manga.id)/thumbnail"
     }
     
 }
