@@ -7,8 +7,9 @@
 
 import SwiftUI
 import CachedAsyncImage
-import ImageViewerRemote
+#if os(iOS)
 import Introspect
+#endif
 
 struct DetailView: View {
     
@@ -24,20 +25,17 @@ struct DetailView: View {
     
     @State var showReader = false
     
+    #if os(iOS)
     @State var uiTabBarController: UITabBarController?
-    
-    @State var showThumbnailViewer: Bool = false
-    
-    @State var imgURL: String = ""
+    #endif
     
     @Environment(\.dismiss) var dismiss
     
     @Environment(\.openURL) var openURL
     
     var body: some View {
+        #if os(iOS)
         content
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .overlay(ImageViewerRemote(imageURL: self.$imgURL, viewerShown: self.$showThumbnailViewer))
             .ignoresSafeArea(.container, edges: [.leading, .trailing])
             .navigationBarItems(trailing: {
                 Menu {
@@ -86,6 +84,9 @@ struct DetailView: View {
                 UITableView.appearance().separatorColor = .separator
                 uiTabBarController?.tabBar.isHidden = false
             }
+        #else
+        content
+        #endif
     }
     
     var content: some View {
@@ -119,6 +120,9 @@ struct DetailView: View {
                             })
                         } else {
                             ForEach(mangaViewModel.chapterList, id: \.id) { chapter in
+                                #if os(macOS)
+                                self.chapterItem(chapter: chapter)
+                                #else
                                 self.chapterItem(chapter: chapter)
                                     .contextMenu {
                                         Button(action: { self.copyURL(url: chapter.url!) }) { Label("Copy URL", systemImage: "doc.on.clipboard") }
@@ -146,7 +150,9 @@ struct DetailView: View {
                                         self.showReader = true
                                     }
                                     .fullScreenCover(isPresented: self.$showReader) {
+                                        #if os(iOS)
                                         ReaderViewPaginated(chapter: chapter)
+                                        #endif
                                     }
                                     .swipeActions(edge: .leading) {
                                         if chapter.bookmarked {
@@ -162,6 +168,7 @@ struct DetailView: View {
                                             Button(action: { print("As read") }, label: { Image(systemName: "eye") }).tint(.blue)
                                         }
                                     }
+                                #endif
                             }
                         }
                     }
@@ -178,10 +185,6 @@ struct DetailView: View {
         VStack(alignment: .leading) {
             HStack (alignment: .top) {
                 thumbnail
-                    .onTapGesture {
-                        self.imgURL = getThumbnailURL()
-                        self.showThumbnailViewer.toggle()
-                    }
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100)
                 
@@ -280,6 +283,7 @@ struct DetailView: View {
         }
     }
     
+    #if os(iOS)
     func shareURL(url: String) {
         guard let data = URL(string: url) else { return }
         let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
@@ -296,6 +300,7 @@ struct DetailView: View {
     func copyURL(url: String) {
         UIPasteboard.general.string = url
     }
+    #endif
     
     func getChaptersCount() -> String {
         if mangaViewModel.chapterList.isEmpty {

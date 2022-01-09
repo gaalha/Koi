@@ -17,6 +17,7 @@ struct CategoryFormView: View {
     
     var body: some View {
         NavigationView {
+            #if os(iOS)
             content
                 .navigationTitle("Edit categories")
                 .navigationBarTitleDisplayMode(.inline)
@@ -33,6 +34,9 @@ struct CategoryFormView: View {
                         })
                     }
                 }
+            #else
+            content
+            #endif
         }
         
     }

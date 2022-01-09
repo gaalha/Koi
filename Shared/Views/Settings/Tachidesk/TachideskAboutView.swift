@@ -16,12 +16,19 @@ struct TachideskAboutView: View {
     @State var isError: Bool = false
     
     var body: some View {
+        #if os(macOS)
+        content
+            .onAppear {
+                fetchAbout()
+            }
+        #else
         content
             .onAppear {
                 fetchAbout()
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("About Tachideks")
+        #endif
     }
     
     var content: some View {
