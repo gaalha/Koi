@@ -1,10 +1,11 @@
 //
-//  MoreView.swift
+//  SettingsView.swift
 //  Koi
 //
 //  Created by Edgar Mejía on 21/6/21.
 //
 
+#if os(iOS)
 import SwiftUI
 import Foundation
 
@@ -87,3 +88,4 @@ struct SettingsView_Previews: PreviewProvider {
         SettingsView()
     }
 }
+#endif

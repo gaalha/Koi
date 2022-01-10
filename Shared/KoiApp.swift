@@ -13,5 +13,11 @@ struct KoiApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        #if os(macOS)
+        Settings {
+            SettingsView()
+        }
+        #endif
     }
 }
