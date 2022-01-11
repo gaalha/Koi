@@ -16,6 +16,8 @@ struct CategoryView: View {
     
     @State var hasError: Bool = false
     
+    @State var id: Int = 0
+    
     @State var name: String = ""
     
     @State var `default`: Bool = false
@@ -30,6 +32,7 @@ struct CategoryView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    self.id = 0
                     self.name = ""
                     self.default = false
                     self.showForm.toggle()
@@ -37,7 +40,7 @@ struct CategoryView: View {
                     Text("Add")
                 }
                 .sheet(isPresented: $showForm, content: {
-                    CategoryFormView(name: $name, default: $default)
+                    CategoryFormView(id: $id, name: $name, default: $default)
                 })
                 
             }
@@ -72,12 +75,13 @@ struct CategoryView: View {
                                     }
                                     
                                     Button("Modify") {
+                                        self.id = category.id
                                         self.name = category.name
                                         self.default = category.default
                                         self.showForm.toggle()
                                     }
                                     .sheet(isPresented: $showForm, content: {
-                                        CategoryFormView(name: $name, default: $default)
+                                        CategoryFormView(id: $id, name: $name, default: $default)
                                     })
                                     .tint(.blue)
                                 }

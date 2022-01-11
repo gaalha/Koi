@@ -9,11 +9,17 @@ import SwiftUI
 
 struct CategoryFormView: View {
     
+    @StateObject private var categoryViewModel = CategoryViewModel()
+    
     @Environment(\.presentationMode) var presentationMode
+    
+    @Binding var id: Int
     
     @Binding var name: String
     
     @Binding var `default`: Bool
+    
+    @State var isSaving: Bool = false
     
     var body: some View {
         NavigationView {
@@ -56,6 +62,17 @@ struct CategoryFormView: View {
                         Text("Default")
                     })
                 }
+            }
+        }
+    }
+    
+    func saveCategory(id: Int?, name: String!, default: Bool = false) {
+        isSaving = true
+        categoryViewModel.saveOne(name: name, default: `default`) { err in
+            isSaving = false
+            if let err = err {
+                print(err)
+                return
             }
         }
     }
