@@ -29,8 +29,8 @@ struct CategoryFormView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {}, label: {
-                            Text("Done")
+                        Button(action: saveCategory, label: {
+                            Text("Save")
                         })
                     }
                     
@@ -66,14 +66,15 @@ struct CategoryFormView: View {
         }
     }
     
-    func saveCategory(id: Int?, name: String!, default: Bool = false) {
+    func saveCategory() {
         isSaving = true
-        categoryViewModel.saveOne(name: name, default: `default`) { err in
+        categoryViewModel.saveOne(id: id, name: name, default: `default`) { err in
             isSaving = false
             if let err = err {
                 print(err)
                 return
             }
+            close()
         }
     }
     

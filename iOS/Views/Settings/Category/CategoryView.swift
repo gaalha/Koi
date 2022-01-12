@@ -69,7 +69,7 @@ struct CategoryView: View {
                                         }
                                         .tint(.accentColor)
                                         Button("Delete") {
-                                            print("Deleted")
+                                            deleteCategory(id: category.id)
                                         }
                                         .tint(.red)
                                     }
@@ -80,12 +80,15 @@ struct CategoryView: View {
                                         self.default = category.default
                                         self.showForm.toggle()
                                     }
-                                    .sheet(isPresented: $showForm, content: {
+                                    .sheet(isPresented: $showForm, onDismiss: {print("Holis")}, content: {
                                         CategoryFormView(id: $id, name: $name, default: $default)
                                     })
                                     .tint(.blue)
                                 }
                         }
+                    }
+                    .refreshable {
+                        fetchCategories()
                     }
                 } else {
                     VStack(alignment: .center) {
@@ -109,6 +112,16 @@ struct CategoryView: View {
                 self.hasError = true
                 return
             }
+        }
+    }
+    
+    func deleteCategory(id: Int) {
+        categoryViewModel.deleteOne(id: id) { err in
+            if let err = err {
+                print(err)
+                return
+            }
+            fetchCategories()
         }
     }
     
